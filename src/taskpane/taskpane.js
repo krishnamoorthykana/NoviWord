@@ -25,6 +25,7 @@ Office.onReady(function (info) {
 // Function to get the chatbot's response (simple hardcoded response or integrate with an API)
 async function getChatbotResponse(question) {
   // For now, a simple mock response
+  console.log("Testing");
   const { GoogleGenerativeAI } = require("@google/generative-ai");
 
   const genAI = new GoogleGenerativeAI("AIzaSyB_ClqIjtTx2oL46vWfdKMFKUPB_YM3Ju8");
