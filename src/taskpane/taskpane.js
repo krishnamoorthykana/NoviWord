@@ -51,7 +51,7 @@ async function insertResponseIntoDocument(response) {
 async function fetchGeminiResponse(prompt) {
   console.log("Testing inside gemini");
   const apiKey = "AIzaSyB_ClqIjtTx2oL46vWfdKMFKUPB_YM3Ju8"; // Replace with your actual API key
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
   const requestBody = {
     prompt: { text: prompt },
