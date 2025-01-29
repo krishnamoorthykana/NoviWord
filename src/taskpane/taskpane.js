@@ -26,15 +26,15 @@ Office.onReady(function (info) {
 async function getChatbotResponse(question) {
   // For now, a simple mock response
   console.log("Testing");
-  const { GoogleGenerativeAI } = require("@google/generative-ai");
+  // const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-  const genAI = new GoogleGenerativeAI("AIzaSyB_ClqIjtTx2oL46vWfdKMFKUPB_YM3Ju8");
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  // const genAI = new GoogleGenerativeAI("AIzaSyB_ClqIjtTx2oL46vWfdKMFKUPB_YM3Ju8");
+  // const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const prompt = "Explain how AI works";
+  // const prompt = "Explain how AI works";
 
-  const result = await model.generateContent(prompt);
-  console.log(result.response.text());
+  // const result = await model.generateContent(prompt);
+  // console.log(result.response.text());
   return "This is a response to: " + question;
 }
 
