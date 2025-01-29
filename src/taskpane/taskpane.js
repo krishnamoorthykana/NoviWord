@@ -26,15 +26,8 @@ Office.onReady(function (info) {
 async function getChatbotResponse(question) {
   // For now, a simple mock response
   console.log("Testing");
-  const { GoogleGenerativeAI } = require("@google/generative-ai");
-
-  const genAI = new GoogleGenerativeAI("AIzaSyB_ClqIjtTx2oL46vWfdKMFKUPB_YM3Ju8");
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-  const prompt = "Explain how AI works";
-
-  const result = await model.generateContent(prompt);
-  console.log(result.response.text());
+  // Example Usage:
+  fetchGeminiResponse("Tell me a fun fact about space.");
   return "This is a response to: " + question;
 }
 
@@ -53,4 +46,35 @@ async function insertResponseIntoDocument(response) {
     body.insertText(response, Word.InsertLocation.end);
     await context.sync();
   });
+}
+
+async function fetchGeminiResponse(prompt) {
+  console.log("Testing inside gemini");
+  const apiKey = "AIzaSyB_ClqIjtTx2oL46vWfdKMFKUPB_YM3Ju8"; // Replace with your actual API key
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText?key=${apiKey}`;
+
+  const requestBody = {
+    prompt: { text: prompt },
+    temperature: 0.7,
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("Gemini Response:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching Gemini response:", error);
+  }
 }
