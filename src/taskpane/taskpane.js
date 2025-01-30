@@ -58,14 +58,31 @@ const initializeDirectLine = async function () {
     console.log("DirectLine Object:", window.DirectLine);
     const directLine = new window.DirectLine.DirectLine({ token: data.token });
     console.log("directLine*******", directLine);
+    console.log("DirectLine instance:", directLine);
+    console.log("DirectLine activity$:", directLine.activity$);
+
     if (!directLine || !directLine.activity$) {
       throw new Error("DirectLine instance failed to initialize");
     }
     //const directLine = new DirectLine.DirectLine({ token: data.token });
     // directLine.current = new DirectLine({ token: data.token });
-    directLine.activity$.subscribe(() => {
-      console.log("Testing testing");
+    directLine.activity$.subscribe((activity) => {
+      console.log("Received activity:", activity);
     });
+    directLine.connectionStatus$.subscribe((status) => {
+      console.log("DirectLine connection status:", status);
+    });
+    directLine
+      .postActivity({
+        from: { id: "user1", name: "User" },
+        type: "message",
+        text: "Hello, bot!",
+      })
+      .subscribe(
+        (id) => console.log("Message sent with ID:", id),
+        (error) => console.error("Error sending message:", error)
+      );
+
     directLine.activity$.subscribe((activity) => {
       console.log("Testing activity: ", activity);
       if (activity.type === "message" && activity.from.id !== "10" && !activity.recipient) {
