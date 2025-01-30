@@ -81,7 +81,9 @@ const initializeDirectLine = async function (question) {
       console.log("Testing activity: ", activity);
       if (activity.type === "message" && activity.from.id !== "10" && !activity.recipient) {
         console.log("Testing response: ", activity.text);
-        displayChatMessage(question, activity.text);
+        if (question !== activity.text) {
+          displayChatMessage(question, activity.text);
+        }
       }
     });
   } catch (error) {
