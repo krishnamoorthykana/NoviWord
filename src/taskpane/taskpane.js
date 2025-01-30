@@ -6,6 +6,7 @@ Office.onReady(function (info) {
     document.getElementById("askButton").onclick = async function () {
       const question = document.getElementById("userInput").value;
       if (question) {
+        document.getElementById("headerId").style.display = "none";
         //const response =
         //await
         initializeDirectLine(question);
