@@ -5,6 +5,7 @@
     /* border: 1px solid #ccc; */
     padding: 10px;
     margin-bottom: 10px;
+    display: flex;
 }
 
 /* Input field styling */
@@ -56,7 +57,6 @@ header img {
 }
 
 .chat-window-main {
-    width: 50%;
     margin: auto;
     background: #fff;
     padding: 10px;
