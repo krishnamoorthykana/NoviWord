@@ -5,8 +5,10 @@ Office.onReady(function (info) {
     document.getElementById("askButton").onclick = async function () {
       const question = document.getElementById("userInput").value;
       if (question) {
-        const response = await getChatbotResponse(question);
-        displayChatMessage(question, response);
+        //const response =
+        //await
+        initializeDirectLine(question);
+        // displayChatMessage(question, response);
       }
     };
 
@@ -23,14 +25,14 @@ Office.onReady(function (info) {
 });
 
 // Function to get the chatbot's response (simple hardcoded response or integrate with an API)
-async function getChatbotResponse(question) {
-  // For now, a simple mock response
-  console.log("Testing");
-  // Example Usage:
-  // fetchGeminiResponse("Tell me a fun fact about space.");
-  initializeDirectLine(question);
-  return "This is a response to: " + question;
-}
+// async function getChatbotResponse(question) {
+//   // For now, a simple mock response
+//   // console.log("Testing");
+//   // Example Usage:
+//   // fetchGeminiResponse("Tell me a fun fact about space.");
+//   initializeDirectLine(question);
+//   // return "This is a response to: " + question;
+// }
 
 // Display user question and bot response in chat window
 function displayChatMessage(question, response) {
