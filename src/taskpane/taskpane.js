@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 Office.onReady(function (info) {
   if (info.host === Office.HostType.Word) {
+    displayChatMessage("", "Hi, I am your word assistant bot-NoviWord", "bot");
     // Handle the Ask button click
     document.getElementById("askButton").onclick = async function () {
       const question = document.getElementById("userInput").value;
