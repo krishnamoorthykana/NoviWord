@@ -51,12 +51,16 @@ Office.onReady(function (info) {
 // Display user question and bot response in chat window
 function displayChatMessage(question, response, role) {
   const chatWindow = document.getElementById("chatWindow");
+  // if (role === "bot") {
+  //   chatWindow.innerHTML += `<div class="bot"><img src="../../assets/copilot.png"/> <br>${response}</div>`;
+  // } else {
+  //   chatWindow.innerHTML += `<div class="user">You<br>${question}</div>`;
+  // }
   if (role === "bot") {
-    chatWindow.innerHTML += `<div class="bot"><img src="../../assets/copilot.png"/> <br>${response}</div>`;
+    chatWindow.innerHTML += `<div class="bot-wrapper"><img src="../../assets/copilot.png"/></div><div class="message bot>${response}</div>`;
   } else {
-    chatWindow.innerHTML += `<div class="user">You<br>${question}</div>`;
+    chatWindow.innerHTML += `<div class="user-wrapper">You<br></div><div class="message user">${question}</div>`;
   }
-
   document.getElementById("userInput").value = ""; // Clear input field
 }
 
