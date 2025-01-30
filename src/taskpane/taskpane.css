@@ -27,13 +27,11 @@ button {
 
 /* User and bot message differentiation */
 .chat-window .user {
-    font-weight: bold;
     text-align: right;
 }
 
 .chat-window .bot {
     font-style: italic;
-    font-weight: bold;
 }
 
 /* Optional: Add some space for the header */
@@ -70,11 +68,13 @@ header img {
     gap: 10px;
 }
 .user-wrapper {
+    font-weight: bold;
     display: flex;
     justify-content: flex-end; /* Align user message to the right */
 }
 
 .bot-wrapper {
+    font-weight: bold;
     display: flex;
     justify-content: flex-start; /* Align bot message to the left */
 }
