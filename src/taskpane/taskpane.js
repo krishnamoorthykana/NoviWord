@@ -66,17 +66,9 @@ const initializeDirectLine = async function (question) {
     if (!directLine || !directLine.activity$) {
       throw new Error("DirectLine instance failed to initialize");
     }
-    //const directLine = new DirectLine.DirectLine({ token: data.token });
-    // directLine.current = new DirectLine({ token: data.token });
-    // directLine.activity$.subscribe((activity) => {
-    //   console.log("Received activity:", activity);
-    // });
-    // directLine.connectionStatus$.subscribe((status) => {
-    //   console.log("DirectLine connection status:", status);
-    // });
     directLine
       .postActivity({
-        from: { id: "user1", name: "User" },
+        from: { id: "10", name: "User" },
         type: "message",
         text: question,
       })
@@ -96,36 +88,3 @@ const initializeDirectLine = async function (question) {
     console.error("Error initializing DirectLine:", error);
   }
 };
-
-// Call the function
-
-// async function fetchGeminiResponse(prompt) {
-//   console.log("Testing inside gemini");
-//   const apiKey = "AIzaSyB_ClqIjtTx2oL46vWfdKMFKUPB_YM3Ju8"; // Replace with your actual API key
-//   const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-
-//   const requestBody = {
-//     prompt: { text: prompt },
-//     temperature: 0.7,
-//   };
-
-//   try {
-//     const response = await fetch(url, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(requestBody),
-//     });
-
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-
-//     const data = await response.json();
-//     console.log("Gemini Response:", data);
-//     return data;
-//   } catch (error) {
-//     console.error("Error fetching Gemini response:", error);
-//   }
-// }
