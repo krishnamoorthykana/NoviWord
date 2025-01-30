@@ -79,6 +79,8 @@ const initializeDirectLine = async function (question) {
 
     directLine.activity$.subscribe((activity) => {
       console.log("Testing activity: ", activity);
+      console.log("Role*******", activity.from.role);
+      console.log("Receipient*******", activity.recipient);
       if (activity.type === "message" && activity.from.id !== "10" && !activity.recipient) {
         console.log("Testing response: ", activity.text);
         if (question !== activity.text) {
