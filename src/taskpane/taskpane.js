@@ -57,7 +57,7 @@ function displayChatMessage(question, response, role) {
   //   chatWindow.innerHTML += `<div class="user">You<br>${question}</div>`;
   // }
   if (role === "bot") {
-    chatWindow.innerHTML += `<div class="bot-wrapper"><img src="../../assets/copilot.png"/></div><div class="message bot>${response}</div>`;
+    chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/></div><div class="message bot">${response}</div>`;
   } else {
     chatWindow.innerHTML += `<div class="user-wrapper">You<br></div><div class="message user">${question}</div>`;
   }
