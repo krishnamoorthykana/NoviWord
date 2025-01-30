@@ -28,7 +28,7 @@ async function getChatbotResponse(question) {
   console.log("Testing");
   // Example Usage:
   // fetchGeminiResponse("Tell me a fun fact about space.");
-  initializeDirectLine();
+  initializeDirectLine(question);
   return "This is a response to: " + question;
 }
 
@@ -48,35 +48,35 @@ async function insertResponseIntoDocument(response) {
     await context.sync();
   });
 }
-const initializeDirectLine = async function () {
+const initializeDirectLine = async function (question) {
   try {
     const response = await fetch(
       "https://148a369decc3eeda85b913c1e80b9a.da.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cra27_agent123/directline/token?api-version=2022-03-01-preview"
     );
     const data = await response.json();
-    console.log("Testing data token:" + JSON.stringify(data, null, 2));
-    console.log("DirectLine Object:", window.DirectLine);
+    // console.log("Testing data token:" + JSON.stringify(data, null, 2));
+    // console.log("DirectLine Object:", window.DirectLine);
     const directLine = new window.DirectLine.DirectLine({ token: data.token });
-    console.log("directLine*******", directLine);
-    console.log("DirectLine instance:", directLine);
-    console.log("DirectLine activity$:", directLine.activity$);
+    // console.log("directLine*******", directLine);
+    // console.log("DirectLine instance:", directLine);
+    // console.log("DirectLine activity$:", directLine.activity$);
 
     if (!directLine || !directLine.activity$) {
       throw new Error("DirectLine instance failed to initialize");
     }
     //const directLine = new DirectLine.DirectLine({ token: data.token });
     // directLine.current = new DirectLine({ token: data.token });
-    directLine.activity$.subscribe((activity) => {
-      console.log("Received activity:", activity);
-    });
-    directLine.connectionStatus$.subscribe((status) => {
-      console.log("DirectLine connection status:", status);
-    });
+    // directLine.activity$.subscribe((activity) => {
+    //   console.log("Received activity:", activity);
+    // });
+    // directLine.connectionStatus$.subscribe((status) => {
+    //   console.log("DirectLine connection status:", status);
+    // });
     directLine
       .postActivity({
         from: { id: "user1", name: "User" },
         type: "message",
-        text: "Hello, bot!",
+        text: question,
       })
       .subscribe(
         (id) => console.log("Message sent with ID:", id),
@@ -87,6 +87,7 @@ const initializeDirectLine = async function () {
       console.log("Testing activity: ", activity);
       if (activity.type === "message" && activity.from.id !== "10" && !activity.recipient) {
         console.log("Testing response: ", activity.text);
+        displayChatMessage(question, activity.text);
       }
     });
   } catch (error) {
