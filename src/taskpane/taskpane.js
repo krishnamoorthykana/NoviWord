@@ -55,10 +55,15 @@ const initializeDirectLine = async function () {
     );
     const data = await response.json();
     console.log("Testing data token:" + JSON.stringify(data, null, 2));
-    const directLine = new DirectLine.DirectLine({ token: data.token });
+    console.log("DirectLine Object:", window.DirectLine);
+    const directLine = new window.DirectLine.DirectLine({ token: data.token });
+    if (!directLine || !directLine.activity$) {
+      throw new Error("DirectLine instance failed to initialize");
+    }
+    //const directLine = new DirectLine.DirectLine({ token: data.token });
     // directLine.current = new DirectLine({ token: data.token });
 
-    directLine.current.activity$.subscribe((activity) => {
+    directLine.activity$.subscribe((activity) => {
       if (activity.type === "message" && activity.from.id !== "10" && !activity.recipient) {
         console.log(activity.text);
       }
