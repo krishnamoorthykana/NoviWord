@@ -29,7 +29,7 @@
             <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
           </GetStarted>
           <FunctionFile resid="Commands.Url"/>
-          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
             <OfficeTab id="TabHome">
               <Group id="CommandsGroup">
                 <Label resid="CommandsGroup.Label"/>
