@@ -5,20 +5,6 @@
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="NoviWord"/>
-  <Icons>
-        <Icon>
-            <Size>16</Size>
-            <DefaultValue>assets/icon-16.png</DefaultValue>
-        </Icon>
-        <Icon>
-            <Size>32</Size>
-            <DefaultValue>assets/icon-32.png</DefaultValue>
-        </Icon>
-        <Icon>
-            <Size>64</Size>
-            <DefaultValue>assets/icon-64.png</DefaultValue>
-        </Icon>
-  </Icons>
   <Description DefaultValue="A template to get started."/>
   <IconUrl DefaultValue="https://krishnamoorthykana.github.io/NoviWord/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://krishnamoorthykana.github.io/NoviWord/assets/icon-64.png"/>
@@ -27,7 +13,7 @@
     <AppDomain>https://krishnamoorthykana.github.io</AppDomain>
   </AppDomains>
   <Hosts>
-    <Host Name="Word"/>
+    <Host Name="Document"/>
   </Hosts>
   <DefaultSettings>
     <SourceLocation DefaultValue="https://krishnamoorthykana.github.io/NoviWord/src/taskpane/index.html"/>
@@ -35,7 +21,7 @@
   <Permissions>ReadWriteDocument</Permissions>
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
     <Hosts>
-      <Host xsi:type="Word">
+      <Host xsi:type="Document">
         <DesktopFormFactor>
           <GetStarted>
             <Title resid="GetStarted.Title"/>
