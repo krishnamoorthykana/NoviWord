@@ -6,13 +6,14 @@ Office.onReady(function (info) {
   let directLine1=null;
   let flag = true;
   console.log("Testing outside****", flag);
-  document.addEventListener("DOMContentLoaded", async function () {
+  window.onload = async function () {
     if (flag) {
-      console.log("Testing****", flag);
-      directLine1 = await initializeDirectLine();
-      flag = false;
+        console.log("Testing****", flag);
+        directLine1 = await initializeDirectLine();
+        flag = false;
     }
-  });
+};
+
    
   document.getElementById("askButton").onclick = async function () {
     const question = document.getElementById("userInput").value;
