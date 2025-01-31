@@ -4,8 +4,10 @@ Office.onReady(function (info) {
   if (info.host === Office.HostType.Word) {
   let directLine1=null;
   let flag = true;
+  console.log("Testing outside****", flag);
   document.addEventListener("DOMContentLoaded", async function () {
     if (flag) {
+      console.log("Testing****", flag);
       directLine1 = await initializeDirectLine();
       flag = false;
     }
