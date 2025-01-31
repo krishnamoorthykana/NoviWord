@@ -39,7 +39,7 @@ Office.onReady(function (info) {
 });
 
 window.onDocumentOpen = function (event) {
-  console.log("Document Open Event Triggered");
+  console.log("Testing>>>>Document Open Event Triggered");
 
   // Try opening the task pane automatically
   Office.addin
