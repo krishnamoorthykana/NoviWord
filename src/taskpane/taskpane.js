@@ -38,6 +38,11 @@ Office.onReady(function (info) {
   }
 });
 
+function onDocumentOpen(event) {
+  Office.addin.showAsTaskpane(); // Automatically open the add-in task pane
+  event.completed(); // Notify Office that the event is handled
+}
+Office.actions.associate("onDocumentOpen", onDocumentOpen);
 // Function to get the chatbot's response (simple hardcoded response or integrate with an API)
 // async function getChatbotResponse(question) {
 //   // For now, a simple mock response

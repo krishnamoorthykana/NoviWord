@@ -5,6 +5,12 @@
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="NoviWord"/>
+  <Icons>
+        <Icon>
+            <Size>16</Size>
+            <DefaultValue>assets/icon-16.png</DefaultValue>
+        </Icon>
+  </Icons>
   <Description DefaultValue="A template to get started."/>
   <IconUrl DefaultValue="https://krishnamoorthykana.github.io/NoviWord/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://krishnamoorthykana.github.io/NoviWord/assets/icon-64.png"/>
@@ -60,6 +66,15 @@
         </DesktopFormFactor>
       </Host>
     </Hosts>
+    <Runtime>
+        <Override>
+            <AutoRun>
+                <LaunchEvents>
+                    <LaunchEvent Type="DocumentOpen" FunctionName="onDocumentOpen"/>
+                </LaunchEvents>
+            </AutoRun>
+        </Override>
+    </Runtime>
     <Resources>
       <bt:Images>
         <bt:Image id="Icon.16x16" DefaultValue="https://krishnamoorthykana.github.io/NoviWord/assets/icon-16.png"/>
