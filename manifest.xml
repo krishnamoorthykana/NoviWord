@@ -15,15 +15,6 @@
   <Hosts>
     <Host Name="Document"/>
   </Hosts>
-  <ExtensionPoints>
-        <ExtensionPoint xsi:type="MessageReadCommandSurface">
-            <OfficeTab id="TabHome">
-                <Group id="CommandsGroup" label="My Add-in Group">
-                    <Control xsi:type="Button" id="myButton" label="My Add-in Button" icon="icon.png" action="https://krishnamoorthykana.github.io/NoviWord/src/taskpane/index.html" />
-                </Group>
-            </OfficeTab>
-        </ExtensionPoint>
-    </ExtensionPoints>
   <DefaultSettings>
     <SourceLocation DefaultValue="https://krishnamoorthykana.github.io/NoviWord/src/taskpane/index.html"/>
   </DefaultSettings>
