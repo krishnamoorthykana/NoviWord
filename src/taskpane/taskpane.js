@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-import { welcomePromt, botUrl } from "../constants";
 Office.onReady(function (info) {
   if (info.host === Office.HostType.Word) {
     displayChatMessage("", "Hi, I am your word assistant bot-NoviWord", "bot");
@@ -115,8 +114,6 @@ const initializeDirectLine = async function (question) {
       );
 
     directLine.activity$.subscribe((activity) => {
-      console.log(botUrl);
-      console.log(welcomePromt);
       console.log("Testing activity: ", activity);
       console.log("Role*******", activity.from.role);
       if (activity.type === "message" && activity.from.id !== "10" && !activity.recipient) {
