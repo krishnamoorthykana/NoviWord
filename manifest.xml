@@ -10,6 +10,14 @@
             <Size>16</Size>
             <DefaultValue>assets/icon-16.png</DefaultValue>
         </Icon>
+        <Icon>
+            <Size>32</Size>
+            <DefaultValue>assets/icon-32.png</DefaultValue>
+        </Icon>
+        <Icon>
+            <Size>64</Size>
+            <DefaultValue>assets/icon-64.png</DefaultValue>
+        </Icon>
   </Icons>
   <Description DefaultValue="A template to get started."/>
   <IconUrl DefaultValue="https://krishnamoorthykana.github.io/NoviWord/assets/icon-32.png"/>
