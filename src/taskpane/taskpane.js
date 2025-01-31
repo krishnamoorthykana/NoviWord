@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 Office.onReady(function (info) {
+  console.log("Testing outside****");
   if (info.host === Office.HostType.Word) {
   let directLine1=null;
   let flag = true;
