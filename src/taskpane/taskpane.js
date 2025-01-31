@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
+import { welcomePromt, botUrl } from "../constants";
 Office.onReady(function (info) {
   if (info.host === Office.HostType.Word) {
-    displayChatMessage("", "Hi, I am your word assistant bot-NoviWord", "bot");
+    displayChatMessage("", welcomePromt, "bot");
     // Handle the Ask button click
     document.getElementById("askButton").onclick = async function () {
       const question = document.getElementById("userInput").value;
@@ -88,9 +89,7 @@ async function insertResponseIntoDocument(response) {
 }
 const initializeDirectLine = async function (question) {
   try {
-    const response = await fetch(
-      "https://148a369decc3eeda85b913c1e80b9a.da.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cra27_agent_gGhuq5/directline/token?api-version=2022-03-01-preview"
-    );
+    const response = await fetch(botUrl);
     const data = await response.json();
     // console.log("Testing data token:" + JSON.stringify(data, null, 2));
     // console.log("DirectLine Object:", window.DirectLine);
