@@ -90,7 +90,7 @@ async function insertResponseIntoDocument(response) {
 const initializeDirectLine = async function (question) {
   try {
     const response = await fetch(
-      "https://148a369decc3eeda85b913c1e80b9a.da.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cra27_agent_gGhuq5/directline/token?api-version=2022-03-01-preview"
+      "https://148a369decc3eeda85b913c1e80b9a.da.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cra27_agent123/directline/token?api-version=2022-03-01-preview"
     );
     const data = await response.json();
     // console.log("Testing data token:" + JSON.stringify(data, null, 2));
@@ -115,8 +115,8 @@ const initializeDirectLine = async function (question) {
       );
 
     directLine.activity$.subscribe((activity) => {
-      console.log(welcomePromt);
       console.log(botUrl);
+      console.log(welcomePromt);
       console.log("Testing activity: ", activity);
       console.log("Role*******", activity.from.role);
       if (activity.type === "message" && activity.from.id !== "10" && !activity.recipient) {
