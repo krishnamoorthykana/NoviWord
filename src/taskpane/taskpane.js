@@ -39,6 +39,7 @@ Office.onReady(function (info) {
 });
 
 function onDocumentOpen(event) {
+  console.log("Testing auto open**********");
   Office.addin.showAsTaskpane(); // Automatically open the add-in task pane
   event.completed(); // Notify Office that the event is handled
 }
