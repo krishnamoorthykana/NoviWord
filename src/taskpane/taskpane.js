@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
- import { welcomePrompt,botUrl }  from "../constants.js";
+ 
 Office.onReady(async function (info) {
-  displayStartingMessage(welcomePrompt);
+  displayStartingMessage("Hi, I am your word assistant bot-NoviWord");
   let directLine1 = await initializeDirectLine();
 if (info.host === Office.HostType.Word) {
   //let flag=true;
@@ -103,7 +103,9 @@ async function insertResponseIntoDocument(response) {
 }
 const initializeDirectLine = async function () {
   try {
-    const response = await fetch(botUrl);
+    const response = await fetch(
+      "https://148a369decc3eeda85b913c1e80b9a.da.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cra27_agent123/directline/token?api-version=2022-03-01-preview"
+    );
     const data = await response.json();
    
     const directLine = new window.DirectLine.DirectLine({ token: data.token });
