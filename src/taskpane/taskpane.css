@@ -99,3 +99,16 @@ header img {
     color: black;
     align-self: flex-start;
 }
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+ 
+  button:hover {
+    background-color: #005a8b;
+  }

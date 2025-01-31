@@ -74,7 +74,7 @@ Office.onReady(function (info) {
               };
    
               // Display the bot's message
-              chatWindow.innerHTML += `<div class="bot"><img src="assets/copilot.png" alt="Copilot Icon" /> <br>${attachment.content.text}</div>`;
+              chatWindow.innerHTML += `<div class="bot"><img src="../../assets/copilot.png" alt="Copilot Icon" /> <br>${attachment.content.text}</div>`;
               chatWindow.appendChild(signinButton); // Add the button after the message
             }
           });
