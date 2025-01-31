@@ -38,15 +38,20 @@ Office.onReady(function (info) {
   }
 });
 
-function onDocumentOpen(event) {
-  console.log("Testing auto open**********");
+window.onDocumentOpen = function (event) {
+  console.log("Document Open Event Triggered");
+
+  // Try opening the task pane automatically
   Office.addin
     .showAsTaskpane()
     .then(() => console.log("Taskpane opened"))
-    .catch((err) => console.error("Error opening taskpane:", err)); // Automatically open the add-in task pane
+    .catch((err) => console.error("Error opening taskpane:", err));
+
   event.completed(); // Notify Office that the event is handled
-}
-Office.actions.associate("onDocumentOpen", onDocumentOpen);
+};
+
+// Register the event handler
+Office.actions.associate("onDocumentOpen", window.onDocumentOpen);
 // Function to get the chatbot's response (simple hardcoded response or integrate with an API)
 // async function getChatbotResponse(question) {
 //   // For now, a simple mock response
