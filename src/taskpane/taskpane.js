@@ -4,6 +4,10 @@ Office.onReady(function (info) {
   if (info.host === Office.HostType.Word) {
   let directLine1=null;
   let flag = true;
+  document.getElementById("myButton").onclick = function() {
+    // Open the task pane when the button is clicked
+    Office.context.ui.displayDialogAsync('https://krishnamoorthykana.github.io/NoviWord/src/taskpane/index.html"', { height: 30, width: 20 });
+  };
   document.addEventListener("DOMContentLoaded", async function () {
     if (flag) {
       directLine1 = await initializeDirectLine();

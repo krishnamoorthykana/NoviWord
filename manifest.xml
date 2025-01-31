@@ -15,6 +15,15 @@
   <Hosts>
     <Host Name="Document"/>
   </Hosts>
+  <ExtensionPoints>
+        <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabHome">
+                <Group id="CommandsGroup" label="My Add-in Group">
+                    <Control xsi:type="Button" id="myButton" label="My Add-in Button" icon="icon.png" action="https://krishnamoorthykana.github.io/NoviWord/src/taskpane/index.html" />
+                </Group>
+            </OfficeTab>
+        </ExtensionPoint>
+    </ExtensionPoints>
   <DefaultSettings>
     <SourceLocation DefaultValue="https://krishnamoorthykana.github.io/NoviWord/src/taskpane/index.html"/>
   </DefaultSettings>
@@ -29,7 +38,7 @@
             <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
           </GetStarted>
           <FunctionFile resid="Commands.Url"/>
-          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+          <!-- <ExtensionPoint xsi:type="MessageReadCommandSurface">
             <OfficeTab id="TabHome">
               <Group id="CommandsGroup">
                 <Label resid="CommandsGroup.Label"/>
@@ -56,7 +65,16 @@
                 </Control>
               </Group>
             </OfficeTab>
-          </ExtensionPoint>
+          </ExtensionPoint> -->
+          <ExtensionPoints>
+        <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabHome">
+                <Group id="MyCustomGroup" label="My Add-in Group">
+                    <Control xsi:type="Button" id="myButton" label="My Add-in Button" icon="icon.png" action="https://krishnamoorthykana.github.io/NoviWord/src/taskpane/index.html" />
+                </Group>
+            </OfficeTab>
+        </ExtensionPoint>
+    </ExtensionPoints>
         </DesktopFormFactor>
       </Host>
     </Hosts>
