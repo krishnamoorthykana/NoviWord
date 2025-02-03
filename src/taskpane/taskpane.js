@@ -170,6 +170,9 @@ function scrollToBottom() {
   }, 100); // Timeout ensures scroll happens after the new message is rendered
 }
 
+
+
+
 // Check if SpeechRecognition API is available
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -181,10 +184,17 @@ if (!SpeechRecognition) {
     recognition.interimResults = false; // Get final results only
 
     // When user clicks the button, start recognition
-    document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("speakButton").addEventListener("click", () => {
-            document.getElementById("output").innerText = "Listening...";
-            recognition.start();
+    document.getElementById("speakButton").addEventListener("click", () => {
+      document.getElementById("output").innerText = "Listening...";
+      
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(() => {
+          console.log("Microphone access granted");
+          recognition.start();
+        })
+        .catch((error) => {
+          console.error("Microphone access denied:", error);
+          document.getElementById("output").innerText = "Error: Microphone access denied.";
         });
     });
 
