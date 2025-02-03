@@ -35,7 +35,7 @@ document.getElementById("userInput").addEventListener("keydown", async function 
 // Handle the Insert button click
 document.getElementById("insertButton").onclick = async function () {
   const response = document.getElementById("chatWindow").lastChild
-    ? document.getElementById("chatWindow").lastChild.innerHTML
+    ? document.getElementById("chatWindow").lastChild.innerText
     : "";
   if (response) {
     await insertResponseIntoDocument(response);
@@ -98,7 +98,7 @@ function displayChatMessage(question, response, role) {
 async function insertResponseIntoDocument(response) {
   await Word.run(async (context) => {
     const body = context.document.body;
-    body.insertHTML(response, Word.InsertLocation.end);
+    body.insertText(response, Word.InsertLocation.end);
     await context.sync();
   });
 }
