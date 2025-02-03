@@ -7,7 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Word Chatbot Add-in</title>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (navigator.permissions) {
+                navigator.permissions.query({ name: "microphone" }).then((permissionStatus) => {
+                    console.log("Microphone permission:", permissionStatus.state);
+                });
+            }
+        });
+    </script>
+    
     <!-- Office JavaScript API -->
     <script src="https://cdn.jsdelivr.net/npm/botframework-directlinejs@latest/dist/directline.js"></script>
 
@@ -43,11 +52,12 @@
 
         <!-- Buttons -->
         <button id="askButton" class="ms-Button ms-Button--primary">Ask</button>
-        <button id="insertButton" class="ms-Button ms-Button--hero">Insert into document</button>
+        <button id="insertButton" class="ms-Button ms-Button--hero">Insert into document!!!!!!!!</button>
     </main>
     <button id="speakButton">Speak</button>
     <p id="output">Your speech will appear here...</p>
     <script type="text/javascript" src="taskpane.js"></script>
+
 </body>
 
 </html>
