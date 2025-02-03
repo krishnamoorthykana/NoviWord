@@ -72,6 +72,7 @@ function displayChatMessage(question, response, role) {
             // Display the bot's message
             chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${attachment.content.text}</div>`;
             chatWindow.appendChild(signinButton); // Add the button after the message
+            scrollToBottom();
           }
         });
       }

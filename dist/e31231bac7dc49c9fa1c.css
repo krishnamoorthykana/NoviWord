@@ -1,6 +1,9 @@
 /* Basic styling for the chat window */
 .chat-window {
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
+    overflow-y: auto;
+    -ms-overflow-style: none;  /* Hide scrollbar in Edge/IE */
+    scrollbar-width: none;  /* Hide scrollbar in Firefox */
     height: 300px;
     /* border: 1px solid #ccc; */
     padding: 10px;
@@ -8,7 +11,9 @@
     display: flex;
     flex-direction: column;
 }
-
+.chat-window::-webkit-scrollbar {
+    display: none;  /* Hide scrollbar in Chrome, Safari */
+}
 /* Input field styling */
 .input-field {
     width: 80%;
