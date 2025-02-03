@@ -102,7 +102,7 @@ async function insertResponseIntoDocument(response) {
     console.log("Inside Testing insert to doc*********");
   console.log("Inside response*******", response);
     const body = context.document.body;
-    body.insertHTML(response, Word.InsertLocation.end);
+    body.insertHtml(response, Word.InsertLocation.end);
     await context.sync();
   });
 }
