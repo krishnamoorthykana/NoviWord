@@ -156,4 +156,7 @@ const getBotResponse = async function (directLine, question) {
  
 }
  
- 
+function scrollToBottom() {
+  var chatWindow = document.getElementById("chatWindow");
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+}
