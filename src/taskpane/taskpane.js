@@ -43,7 +43,8 @@ document.getElementById("insertButton").onclick = async function () {
 };
 }
 });
- 
+
+
 function displayStartingMessage(starter) {
   const chatWindow = document.getElementById("chatWindow");
   chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${starter}</div>`;      
@@ -72,7 +73,6 @@ function displayChatMessage(question, response, role) {
             // Display the bot's message
             chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${attachment.content.text}</div>`;
             chatWindow.appendChild(signinButton); // Add the button after the message
-            scrollToBottom();
           }
         });
       }
@@ -89,7 +89,7 @@ function displayChatMessage(question, response, role) {
      
     }
   }
- 
+  scrollToBottom();
   // Clear the input field
   document.getElementById("userInput").value = "";
 }
@@ -155,10 +155,9 @@ const getBotResponse = async function (directLine, question) {
     );
  
 }
- 
 function scrollToBottom() {
-  var chatWindow = document.getElementById("chatWindow");
+  const chatWindow = document.getElementById("chatWindow");
   setTimeout(() => {
-      chatWindow.scrollTop = chatWindow.scrollHeight;
-  }, 100); // Small delay to ensure element is added
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }, 100); // Timeout ensures scroll happens after the new message is rendered
 }
