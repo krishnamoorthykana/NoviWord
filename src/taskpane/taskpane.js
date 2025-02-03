@@ -169,3 +169,37 @@ function scrollToBottom() {
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }, 100); // Timeout ensures scroll happens after the new message is rendered
 }
+
+// Check if SpeechRecognition API is available
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (!SpeechRecognition) {
+    alert("Your browser does not support Speech Recognition.");
+} else {
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US"; // Set language
+    recognition.interimResults = false; // Get final results only
+
+    // When user clicks the button, start recognition
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("speakButton").addEventListener("click", () => {
+            document.getElementById("output").innerText = "Listening...";
+            recognition.start();
+        });
+    });
+
+    // Process speech results
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById("output").innerText = "You said: " + transcript;
+    };
+
+    recognition.onerror = (event) => {
+        console.error("Error:", event.error);
+        document.getElementById("output").innerText = "Error: " + event.error;
+    };
+
+    recognition.onend = () => {
+        console.log("Speech recognition ended.");
+    };
+}
