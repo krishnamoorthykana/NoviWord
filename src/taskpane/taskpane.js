@@ -35,7 +35,7 @@ document.getElementById("userInput").addEventListener("keydown", async function 
 // Handle the Insert button click
 document.getElementById("insertButton").onclick = async function () {
   const response = document.getElementById("chatWindow").lastChild
-    ? document.getElementById("chatWindow").lastChild.innerText
+    ? document.getElementById("chatWindow").lastChild.innerHTML
     : "";
   if (response) {
     await insertResponseIntoDocument(response);
@@ -102,7 +102,7 @@ async function insertResponseIntoDocument(response) {
     console.log("Inside Testing insert to doc*********");
   console.log("Inside response*******", response);
     const body = context.document.body;
-    body.insertText(response, Word.InsertLocation.end);
+    body.insertHtml(response, Word.InsertLocation.end);
     await context.sync();
   });
 }
