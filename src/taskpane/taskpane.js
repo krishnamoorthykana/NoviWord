@@ -96,7 +96,11 @@ function displayChatMessage(question, response, role) {
  
 // Function to insert the response into the Word document
 async function insertResponseIntoDocument(response) {
+  console.log("Testing insert to doc*********");
+  console.log("response*******", response);
   await Word.run(async (context) => {
+    console.log("Inside Testing insert to doc*********");
+  console.log("Inside response*******", response);
     const body = context.document.body;
     body.insertHTML(response, Word.InsertLocation.end);
     await context.sync();
