@@ -174,6 +174,7 @@ function scrollToBottom() {
 
 
 // Check if SpeechRecognition API is available
+// Check if SpeechRecognition API is available
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 if (!SpeechRecognition) {
@@ -183,19 +184,25 @@ if (!SpeechRecognition) {
     recognition.lang = "en-US"; // Set language
     recognition.interimResults = false; // Get final results only
 
-    // When user clicks the button, start recognition
-    document.getElementById("speakButton").addEventListener("click", () => {
-      document.getElementById("output").innerText = "Listening...";
-      
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(() => {
-          console.log("Microphone access granted");
-          recognition.start();
-        })
-        .catch((error) => {
-          console.error("Microphone access denied:", error);
-          document.getElementById("output").innerText = "Error: Microphone access denied.";
-        });
+    document.addEventListener("DOMContentLoaded", () => {
+        const speakButton = document.getElementById("speakButton");
+
+        if (speakButton) {
+            speakButton.addEventListener("click", async () => {
+                document.getElementById("output").innerText = "Listening...";
+
+                try {
+                    // Request microphone permission before starting speech recognition
+                    await navigator.mediaDevices.getUserMedia({ audio: true });
+                    console.log("Microphone access granted");
+
+                    recognition.start();
+                } catch (error) {
+                    console.error("Microphone access denied:", error);
+                    document.getElementById("output").innerText = "Error: Microphone access denied.";
+                }
+            });
+        }
     });
 
     // Process speech results
