@@ -105,9 +105,10 @@ header img {
     align-self: flex-start;
 }
 
-/* button {
-    margin-top: 10px;
-    padding: 10px;
+ button {
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 8px;
     background-color: #0078d4;
     color: white;
     border: none;
@@ -116,20 +117,5 @@ header img {
  
   button:hover {
     background-color: #005a8b;
-  } */
-
-  .ask-btn {
-    background-color: #0078d4;
-    color: white;
-    border: none;
-    border-radius: 8px; /* Adjust for more or less rounding */
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .ask-btn {
-    background-color: #005a8b;
-  }
+  } 
   
