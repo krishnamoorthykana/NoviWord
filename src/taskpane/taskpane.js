@@ -35,7 +35,7 @@ document.getElementById("userInput").addEventListener("keydown", async function 
 // Handle the Insert button click
 document.getElementById("insertButton").onclick = async function () {
   const response = document.getElementById("chatWindow").lastChild
-    ? document.getElementById("chatWindow").lastChild.innerText
+    ? document.getElementById("chatWindow").lastChild.innerHTML
     : "";
   if (response) {
     await insertResponseIntoDocument(response);
