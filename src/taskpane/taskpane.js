@@ -80,8 +80,12 @@ function displayChatMessage(question, response, role) {
   } else {
     // Regular message display if no attachments
     if (role === "bot") {
-      if(response.text){
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;      }
+      if(response.speak==="Generate"){
+        insertResponseIntoDocument(response.text);
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">SOW content generated in document</div>`;
+      }
+      else if(response.text){
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;      }
     } else {
       if(question){
      
