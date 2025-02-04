@@ -173,8 +173,10 @@ function scrollToBottom() {
 let recognition = null;
 
 document.getElementById("speakButton").addEventListener("click", async () => {
+  
   try {
     await navigator.mediaDevices.getUserMedia({ audio: true });
+    document.getElementById("output").innerText = "Listening...";
     console.log("Microphone access granted.");
     startVoiceInput();
   } catch (error) {
@@ -205,6 +207,7 @@ function startVoiceInput() {
     console.log("Recognized text:", transcript);
     // insertTextIntoWord(transcript);
     document.getElementById("userInput").value = transcript;
+    document.getElementById("output").innerText = transcript
   };
 
   recognition.onerror = function (event) {
