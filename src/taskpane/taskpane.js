@@ -170,81 +170,57 @@ function scrollToBottom() {
   }, 100); // Timeout ensures scroll happens after the new message is rendered
 }
 
+let recognition = null;
 
-
-
-// Check if SpeechRecognition API is available
-// Check if SpeechRecognition API is available
-// const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-// if (!SpeechRecognition) {
-//     alert("Your browser does not support Speech Recognition.");
-// } else {
-//     const recognition = new SpeechRecognition();
-//     recognition.lang = "en-US"; // Set language
-//     recognition.interimResults = false; // Get final results only
-
-//     document.addEventListener("DOMContentLoaded", () => {
-//         const speakButton = document.getElementById("speakButton");
-
-//         if (speakButton) {
-//             speakButton.addEventListener("click", async () => {
-//                 document.getElementById("output").innerText = "Listening...";
-
-//                 try {
-//                     // Request microphone permission before starting speech recognition
-//                     await navigator.mediaDevices.getUserMedia({ audio: true });
-//                     console.log("Microphone access granted");
-
-//                     recognition.start();
-//                 } catch (error) {
-//                     console.error("Microphone access denied:", error);
-//                     document.getElementById("output").innerText = "Error: Microphone access denied.";
-//                 }
-//             });
-//         }
-//     });
-
-//     // Process speech results
-//     recognition.onresult = (event) => {
-//         const transcript = event.results[0][0].transcript;
-//         document.getElementById("output").innerText = "You said: " + transcript;
-//     };
-
-//     recognition.onerror = (event) => {
-//         console.error("Error:", event.error);
-//         document.getElementById("output").innerText = "Error: " + event.error;
-//     };
-
-//     recognition.onend = () => {
-//         console.log("Speech recognition ended.");
-//     };
-// }
 document.getElementById("speakButton").addEventListener("click", async () => {
   try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-      console.log("Microphone access granted.");
-      startVoiceInput();
+    await navigator.mediaDevices.getUserMedia({ audio: true });
+    console.log("Microphone access granted.");
+    startVoiceInput();
   } catch (error) {
-      console.error("Microphone access denied:", error);
+    console.error("Microphone access denied:", error);
   }
 });
 
 function startVoiceInput() {
-  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  // If a recognition instance already exists, stop it before starting a new one
+  if (recognition && recognition.abort) {
+    recognition.abort(); // This will stop the ongoing recognition session
+  }
+
+  recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
   recognition.lang = "en-US";
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
   recognition.continuous = true;
-  recognition.start();
 
+  // recognition.start();
+   // trying continuos
+  recognition.onstart = function () {
+    console.log("Speech recognition started.");
+  };
+   // trying continuos
   recognition.onresult = function (event) {
-      const transcript = event.results[0][0].transcript;
-      console.log("Recognized text:", transcript);
-   //   insertTextIntoWord(transcript);
+    const transcript = event.results[0][0].transcript;
+    console.log("Recognized text:", transcript);
+    // insertTextIntoWord(transcript);
+    document.getElementById("userInput").value = transcript;
   };
 
   recognition.onerror = function (event) {
-      console.error("Speech recognition error:", event.error);
+    console.error("Speech recognition error:", event.error);
+     // trying continuos
+    if (event.error === 'aborted') {
+      console.log("Restarting recognition...");
+      recognition.start();
+    }
+     // trying continuos
   };
+  // trying continuos
+  recognition.onend = function () {
+    console.log("Speech recognition ended.");
+  };
+
+  recognition.start();
+  //  // trying continuos
 }
