@@ -79,6 +79,8 @@
 
                 // Insert recognized text into Word document
                 console.log(transcript);
+                document.getElementById('output').textContent = `Recognized Speech: ${transcript}`;
+                document.getElementById("userInput").value = transcript;
             });
         });
     </script>

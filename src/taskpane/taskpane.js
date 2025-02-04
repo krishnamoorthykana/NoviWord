@@ -230,21 +230,21 @@ function scrollToBottom() {
 
 
 //azure
-window.startAzureSpeechRecognition = async function () {
-  const speechConfig = SpeechSDK.SpeechConfig.fromSubscription("8kukA9dGABBSc39vo5jFKOoPtB2moOvMhekCwYjXGEPtv0jvCFb8JQQJ99AKAC4f1cMXJ3w3AAAYACOG6771", "westus");
-  speechConfig.speechRecognitionLanguage = "en-US"; 
+// window.startAzureSpeechRecognition = async function () {
+//   const speechConfig = SpeechSDK.SpeechConfig.fromSubscription("8kukA9dGABBSc39vo5jFKOoPtB2moOvMhekCwYjXGEPtv0jvCFb8JQQJ99AKAC4f1cMXJ3w3AAAYACOG6771", "westus");
+//   speechConfig.speechRecognitionLanguage = "en-US"; 
 
-  const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
-  const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
+//   const audioConfig = SpeechSDK.AudioConfig.fromDefaultMicrophoneInput();
+//   const recognizer = new SpeechSDK.SpeechRecognizer(speechConfig, audioConfig);
 
-  recognizer.recognizeOnceAsync(result => {
-      if (result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
-          console.log("Recognized text:", result.text); // ✅ Log the recognized speech
-      } else {
-          console.error("Speech recognition failed:", result.reason);
-      }
-      recognizer.close();
-  });
-};
+//   recognizer.recognizeOnceAsync(result => {
+//       if (result.reason === SpeechSDK.ResultReason.RecognizedSpeech) {
+//           console.log("Recognized text:", result.text); // ✅ Log the recognized speech
+//       } else {
+//           console.error("Speech recognition failed:", result.reason);
+//       }
+//       recognizer.close();
+//   });
+// };
 
 
