@@ -236,6 +236,7 @@ document.getElementById("speakButton").addEventListener("click", async () => {
 function startVoiceInput() {
   const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
   recognition.lang = "en-US";
+  recognition.continuous = true;
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 
@@ -249,5 +250,13 @@ function startVoiceInput() {
 
   recognition.onerror = function (event) {
       console.error("Speech recognition error:", event.error);
+      if (event.error === "no-speech") {
+        console.log("No speech detected. Restarting recognition...");
+        recognition.start(); // Restart recognition
+    }
   };
+  recognition.onend = function () {
+    console.log("Speech recognition ended. Restarting...");
+    recognition.start(); // Restart automatically if it stops
+};
 }
