@@ -1,99 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Speech Recognition</title>
-</head>
-<body>
-    <h1>Speak Now!</h1>
-
-    <script>
-        // Check if SpeechRecognition is supported by the browser
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = "en-US"; // Set language
-        recognition.interimResults = false; // Don't return partial results
-        recognition.maxAlternatives = 1; // Limit the number of alternative results
-
-        recognition.onstart = function () {
-            console.log("Speech recognition started.");
-        };
-
-        recognition.onresult = function (event) {
-            // Get the recognized text
-            const transcript = event.results[0][0].transcript;
-
-            // Send recognized text back to the main page
-            window.opener.postMessage(transcript, window.location.origin);
-            window.close(); // Close the pop-up after recognition
-        };
-
-        recognition.onerror = function (event) {
-            console.error("Error in speech recognition: ", event.error);
-        };
-
-        recognition.onend = function () {
-            console.log("Speech recognition ended.");
-        };
-
-        // Start speech recognition when the pop-up is opened
-        recognition.start();
-    </script>
-</body>
-</html> -->
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Speech Recognition</title>
-</head>
-<body>
-    <h1>Speak Now!</h1>
-
-    <script>
-        // Check if SpeechRecognition is supported by the browser
-        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = "en-US"; // Set language
-        recognition.interimResults = true; // Enable interim results (partial recognition)
-        recognition.maxAlternatives = 1; // Limit the number of alternative results
-        recognition.continuous = true; // Keep the recognition session alive (for long sentences)
-
-        let transcript = ""; // Variable to accumulate the recognized text
-
-        recognition.onstart = function () {
-            console.log("Speech recognition started.");
-        };
-
-        recognition.onresult = function (event) {
-            // Loop through the results and update the transcript
-            for (let i = event.resultIndex; i < event.results.length; i++) {
-                const result = event.results[i];
-                if (result.isFinal) {
-                    transcript += result[0].transcript + " "; // Append final result
-                } else {
-                    transcript += result[0].transcript + " "; // Append interim result
-                }
-            }
-
-            // Send the updated transcript back to the main page
-            window.opener.postMessage(transcript, window.location.origin);
-        };
-
-        recognition.onerror = function (event) {
-            console.error("Error in speech recognition: ", event.error);
-        };
-
-        recognition.onend = function () {
-            console.log("Speech recognition ended.");
-        };
-
-        // Start speech recognition when the pop-up is opened
-        recognition.start();
-    </script>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,30 +10,27 @@
     <script>
         // Check if SpeechRecognition is supported by the browser
         const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-        recognition.lang = "en-US"; // Set language
-        recognition.interimResults = true; // Enable interim results (partial recognition)
-        recognition.maxAlternatives = 1; // Limit the number of alternative results
-        recognition.continuous = true; // Keep the recognition session alive (for long sentences)
+        recognition.lang = "en-US"; 
+        recognition.interimResults = true; 
+        recognition.maxAlternatives = 1; 
+        recognition.continuous = true; 
 
-        let transcript = ""; // Variable to accumulate the recognized text
+        let transcript = ""; 
 
         recognition.onstart = function () {
             console.log("Speech recognition started.");
         };
 
         recognition.onresult = function (event) {
-            // Loop through the results and update the transcript
             let finalTranscript = "";
             for (let i = event.resultIndex; i < event.results.length; i++) {
                 const result = event.results[i];
                 if (result.isFinal) {
-                    finalTranscript = result[0].transcript; // Get only the final result
-                    break; // Exit the loop as we only want the final sentence
+                    finalTranscript = result[0].transcript; 
+                    break; 
                 }
             }
-
             if (finalTranscript) {
-                // Send the final, complete sentence back to the main page
                 window.opener.postMessage(finalTranscript, window.location.origin);
                 recognition.stop(); // Stop recognition after final sentence
             }
