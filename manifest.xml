@@ -22,6 +22,7 @@
   <WebApplicationInfo>
     <Resource>https://krishnamoorthykana.github.io/NoviWord</Resource>
     <Permissions>WebApi, Identity</Permissions>
+    <Permissions>mic</Permissions>
 </WebApplicationInfo>
   <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
     <Hosts>

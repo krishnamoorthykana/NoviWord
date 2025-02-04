@@ -223,20 +223,65 @@ function scrollToBottom() {
 
 
 
-document.getElementById("speakButton").addEventListener("click", async () => {
+// document.getElementById("speakButton").addEventListener("click", async () => {
+//   try {
+//       await navigator.mediaDevices.getUserMedia({ audio: true });
+//       console.log("Microphone access granted.");
+//       startVoiceInput();
+//   } catch (error) {
+//       console.error("Microphone access denied:", error);
+//   }
+// });
+
+// function startVoiceInput() {
+//   const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+//   recognition.lang = "en-US";
+//   recognition.continuous = true;
+//   recognition.interimResults = false;
+//   recognition.maxAlternatives = 1;
+
+//   recognition.start();
+
+//   recognition.onresult = function (event) {
+//       const transcript = event.results[0][0].transcript;
+//       console.log("Recognized text:", transcript);
+//       //insertTextIntoWord(transcript);
+//   };
+
+//   recognition.onerror = function (event) {
+//       console.error("Speech recognition error:", event.error);
+//       if (event.error === "no-speech") {
+//         console.log("No speech detected. Restarting recognition...");
+//         recognition.start(); // Restart recognition
+//     }
+//   };
+//   recognition.onend = function () {
+//     console.log("Speech recognition ended. Restarting...");
+//     recognition.start(); // Restart automatically if it stops
+// };
+// }
+
+
+async function requestMicAccess() {
   try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       console.log("Microphone access granted.");
+      stream.getTracks().forEach(track => track.stop()); // Release mic after checking
       startVoiceInput();
   } catch (error) {
       console.error("Microphone access denied:", error);
+      alert("Please enable microphone access in browser settings.");
   }
+}
+
+document.getElementById("speakButton").addEventListener("click", async () => {
+  await requestMicAccess();
 });
 
 function startVoiceInput() {
   const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
   recognition.lang = "en-US";
-  recognition.continuous = true;
+  recognition.continuous = true; // Keep listening
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 
@@ -245,18 +290,19 @@ function startVoiceInput() {
   recognition.onresult = function (event) {
       const transcript = event.results[0][0].transcript;
       console.log("Recognized text:", transcript);
-      //insertTextIntoWord(transcript);
+    //  insertTextIntoWord(transcript);
   };
 
   recognition.onerror = function (event) {
       console.error("Speech recognition error:", event.error);
       if (event.error === "no-speech") {
-        console.log("No speech detected. Restarting recognition...");
-        recognition.start(); // Restart recognition
-    }
+          console.log("No speech detected. Restarting recognition...");
+          recognition.start(); // Restart recognition
+      }
   };
+
   recognition.onend = function () {
-    console.log("Speech recognition ended. Restarting...");
-    recognition.start(); // Restart automatically if it stops
-};
+      console.log("Speech recognition ended. Restarting...");
+      recognition.start();
+  };
 }
