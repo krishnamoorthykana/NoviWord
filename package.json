@@ -29,6 +29,7 @@
     "@google/generative-ai": "^0.21.0",
     "botframework-directlinejs": "^0.15.5",
     "core-js": "^3.36.0",
+    "microsoft-cognitiveservices-speech-sdk": "^1.42.0",
     "regenerator-runtime": "^0.14.1"
   },
   "devDependencies": {
