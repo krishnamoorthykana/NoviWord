@@ -85,7 +85,8 @@ function displayChatMessage(question, response, role) {
         chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">SOW content generated in document</div>`;
       }
       else if(response.text){
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;      }
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;  // Example usage:
+        speakText(response.text);    }
     } else {
       if(question){
      
@@ -169,5 +170,18 @@ function scrollToBottom() {
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }, 100); // Timeout ensures scroll happens after the new message is rendered
 }
+
+function speakText(text) {
+  console.log("Testing Text to Speech");
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.lang = 'en-US'; // Set language
+  speech.rate = 1; // Speed of speech (0.1 to 10)
+  speech.pitch = 1; // Pitch (0 to 2)
+  speech.volume = 1; // Volume (0 to 1)
+
+  window.speechSynthesis.speak(speech);
+}
+
+
 
 
