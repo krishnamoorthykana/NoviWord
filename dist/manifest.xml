@@ -5,6 +5,12 @@
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="NoviWord"/>
+  <Icons>
+    <Icon>
+        <Size>16</Size>
+        <DefaultValue>https://krishnamoorthykana.github.io/NoviWord/assets/icon-32.png</DefaultValue>
+    </Icon>
+  </Icons>
   <Description DefaultValue="A template to get started."/>
   <IconUrl DefaultValue="https://krishnamoorthykana.github.io/NoviWord/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://krishnamoorthykana.github.io/NoviWord/assets/icon-64.png"/>
