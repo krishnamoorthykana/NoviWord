@@ -50,6 +50,8 @@ speechFlag = true;
   // Listen for messages from the pop-up window
   console.log("pop up closed and receiving message");
   window.addEventListener("message", async function (event) {
+    popup.close();
+    console.log("pop up closed and receiving message11111");
     console.log("message received");
       var transcript = null;
       if (event.origin !== window.location.origin) return; // Security check
