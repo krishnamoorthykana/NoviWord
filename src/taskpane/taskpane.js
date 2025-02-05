@@ -228,6 +228,13 @@ speechFlag = true;
       // Insert recognized text into user input 
       console.log(transcript);
       document.getElementById("userInput").value = transcript;
+      const question = document.getElementById("userInput").value;
+      if (question) {
+     
+        displayChatMessage(question, '', "User");
+        getBotResponse(directLine1, question);
+     
+  }
       popup.close();
   });
 });
