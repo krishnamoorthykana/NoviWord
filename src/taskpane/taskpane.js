@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
- 
+ let speechFlag = false;
 Office.onReady(async function (info) {
   displayStartingMessage("Hi, I am your word assistant bot-NoviWord");
   let directLine1 = await initializeDirectLine();
@@ -85,8 +85,12 @@ function displayChatMessage(question, response, role) {
         chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">SOW content generated in document</div>`;
       }
       else if(response.text){
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;  // Example usage:
-        speakText(response.text);    }
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`; 
+        if(speechFlag){ // Example usage:
+        speakText(response.text);
+        speechFlag = false;  
+        }    
+      }
     } else {
       if(question){
      
@@ -182,6 +186,21 @@ function speakText(text) {
   window.speechSynthesis.speak(speech);
 }
 
+document.getElementById('startSpeechButton').addEventListener('click', function () {
+  // Open a pop-up window
+  const popup = window.open('speech.html', 'SpeechRecognition', 'width=400,height=300');
+speechFlag = true;
+  // Listen for messages from the pop-up window
+  window.addEventListener("message", function (event) {
+      if (event.origin !== window.location.origin) return; // Security check
 
+      // Get the recognized text from the pop-up
+      const transcript = event.data;
+
+      // Insert recognized text into Word document
+      console.log(transcript);
+      document.getElementById("userInput").value = transcript;
+  });
+});
 
 
