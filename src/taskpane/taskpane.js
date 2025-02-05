@@ -114,10 +114,10 @@ function displayChatMessage(question, response, role) {
       else if(response.text){
         chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`; 
         if(speechFlag){ 
-          ensureVoicesLoaded(() => {
-            speakText(response.text);
-        });// Example usage:
-        
+        //   ensureVoicesLoaded(() => {
+        //     speakText(response.text);
+        // });// Example usage:
+        speakText(response.text);
         speechFlag = false;  
         }    
       }
@@ -205,40 +205,40 @@ function scrollToBottom() {
   }, 100); // Timeout ensures scroll happens after the new message is rendered
 }
 
-function speakText(text) {
-  console.log("Testing Text to Speech");
-  let voices = window.speechSynthesis.getVoices();
-  console.log("Voices******", voices);
-  let femaleVoice = voices.find(voice => voice.name.includes("Female") || 
-  voice.name.includes("Google UK English Female") ||
-   voice.name.includes("Microsoft Zira")||
-   voice.name.includes("Samantha")
-  );
-  console.log("Set voice********", femaleVoice);
-  const speech = new SpeechSynthesisUtterance(text);
-  // speech.lang = 'en-US'; // Set language
-  // speech.rate = 1; // Speed of speech (0.1 to 10)
-  // speech.pitch = 1; // Pitch (0 to 2)
-  // speech.volume = 1; // Volume (0 to 1)
-  if (femaleVoice) {
-    speech.voice = femaleVoice;
-} else {
-    console.warn("Female voice not found. Using default voice.");
-}
-  window.speechSynthesis.speak(speech);
-}
+// function speakText(text) {
+//   console.log("Testing Text to Speech");
+//   let voices = window.speechSynthesis.getVoices();
+//   console.log("Voices******", voices);
+//   let femaleVoice = voices.find(voice => voice.name.includes("Female") || 
+//   voice.name.includes("Google UK English Female") ||
+//    voice.name.includes("Microsoft Zira")||
+//    voice.name.includes("Samantha")
+//   );
+//   console.log("Set voice********", femaleVoice);
+//   const speech = new SpeechSynthesisUtterance(text);
+//   // speech.lang = 'en-US'; // Set language
+//   // speech.rate = 1; // Speed of speech (0.1 to 10)
+//   // speech.pitch = 1; // Pitch (0 to 2)
+//   // speech.volume = 1; // Volume (0 to 1)
+//   if (femaleVoice) {
+//     speech.voice = femaleVoice;
+// } else {
+//     console.warn("Female voice not found. Using default voice.");
+// }
+//   window.speechSynthesis.speak(speech);
+// }
 
 
-// Load voices properly before calling the function
-function ensureVoicesLoaded(callback) {
-  let voices = window.speechSynthesis.getVoices();
+// // Load voices properly before calling the function
+// function ensureVoicesLoaded(callback) {
+//   let voices = window.speechSynthesis.getVoices();
   
-  if (voices.length > 0) {
-      callback();
-  } else {
-      window.speechSynthesis.onvoiceschanged = callback;
-  }
-}
+//   if (voices.length > 0) {
+//       callback();
+//   } else {
+//       window.speechSynthesis.onvoiceschanged = callback;
+//   }
+// }
 
 
 // document.getElementById('startSpeechButton').addEventListener('click', function () {
@@ -260,3 +260,44 @@ function ensureVoicesLoaded(callback) {
 // });
 
 
+let femaleVoice = null; // Store the selected female voice
+
+function loadVoices() {
+    let voices = window.speechSynthesis.getVoices();
+    
+    // Find a female voice (adjust as needed)
+    femaleVoice = voices.find(voice => 
+        voice.name.includes("Samantha") ||  // macOS US Female
+        voice.name.includes("Victoria") ||  // macOS AU Female
+        voice.name.includes("Moira") ||     // macOS Ireland Female
+        voice.name.includes("Google UK English Female") || 
+        voice.name.includes("Microsoft Zira") 
+    );
+
+    console.log("Female voice selected:", femaleVoice ? femaleVoice.name : "Not found");
+}
+
+function speakText(text) {
+    if (!femaleVoice) {
+        console.warn("Voices not loaded yet. Using default voice.");
+    }
+
+    const speech = new SpeechSynthesisUtterance(text);
+    if (femaleVoice) {
+        speech.voice = femaleVoice;
+    }
+
+    window.speechSynthesis.speak(speech);
+}
+
+// Ensure voices are loaded before calling speakWithFemaleVoice
+function ensureVoicesLoaded() {
+    if (window.speechSynthesis.getVoices().length > 0) {
+        loadVoices();
+    } else {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+}
+
+// Load voices once when the page loads
+ensureVoicesLoaded();
