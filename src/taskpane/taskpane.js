@@ -44,11 +44,12 @@ document.getElementById("insertButton").onclick = async function () {
 
 document.getElementById('startSpeechButton').addEventListener('click', function () {
   // Open a pop-up window to handle the speech
-  var transcript = null;
+  
   const popup = window.open('speech.html', 'SpeechRecognition', 'width=400,height=300');
 speechFlag = true;
   // Listen for messages from the pop-up window
   window.addEventListener("message", async function (event) {
+      var transcript = null;
       if (event.origin !== window.location.origin) return; // Security check
 
       // Get the recognized text from the pop-up
@@ -61,7 +62,9 @@ speechFlag = true;
     if (question) {
         console.log("Testing inside speech if question");
         displayChatMessage(question, '', "User");
-      await getBotResponse(directLine1, question);
+        await getBotResponse(directLine1, question);
+        transcript = null;
+        question = null;
      
   }
       popup.close();
