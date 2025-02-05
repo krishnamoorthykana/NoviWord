@@ -41,6 +41,33 @@ document.getElementById("insertButton").onclick = async function () {
     await insertResponseIntoDocument(response);
   }
 };
+
+document.getElementById('startSpeechButton').addEventListener('click', function () {
+  // Open a pop-up window to handle the speech
+  const popup = window.open('speech.html', 'SpeechRecognition', 'width=400,height=300');
+speechFlag = true;
+  // Listen for messages from the pop-up window
+  window.addEventListener("message", async function (event) {
+      if (event.origin !== window.location.origin) return; // Security check
+
+      // Get the recognized text from the pop-up
+      const transcript = event.data;
+
+      // Insert recognized text into user input 
+      console.log(transcript);
+      document.getElementById("userInput").value = transcript;
+      const question = document.getElementById("userInput").value;
+    if (question) {
+     
+        displayChatMessage(question, '', "User");
+      await getBotResponse(directLine1, question);
+     
+  }
+      popup.close();
+  });
+});
+
+
 }
 });
 
@@ -214,29 +241,22 @@ function ensureVoicesLoaded(callback) {
 }
 
 
-document.getElementById('startSpeechButton').addEventListener('click', function () {
-  // Open a pop-up window to handle the speech
-  const popup = window.open('speech.html', 'SpeechRecognition', 'width=400,height=300');
-speechFlag = true;
-  // Listen for messages from the pop-up window
-  window.addEventListener("message", function (event) {
-      if (event.origin !== window.location.origin) return; // Security check
+// document.getElementById('startSpeechButton').addEventListener('click', function () {
+//   // Open a pop-up window to handle the speech
+//   const popup = window.open('speech.html', 'SpeechRecognition', 'width=400,height=300');
+// speechFlag = true;
+//   // Listen for messages from the pop-up window
+//   window.addEventListener("message", function (event) {
+//       if (event.origin !== window.location.origin) return; // Security check
 
-      // Get the recognized text from the pop-up
-      const transcript = event.data;
+//       // Get the recognized text from the pop-up
+//       const transcript = event.data;
 
-      // Insert recognized text into user input 
-      console.log(transcript);
-      document.getElementById("userInput").value = transcript;
-      const question = document.getElementById("userInput").value;
-      if (question) {
-     
-        displayChatMessage(question, '', "User");
-        getBotResponse(directLine1, question);
-     
-  }
-      popup.close();
-  });
-});
+//       // Insert recognized text into user input 
+//       console.log(transcript);
+//       document.getElementById("userInput").value = transcript;
+//       popup.close();
+//   });
+// });
 
 
