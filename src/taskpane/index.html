@@ -7,19 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Word Chatbot Add-in</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            if (navigator.permissions) {
-                navigator.permissions.query({ name: "microphone" }).then((permissionStatus) => {
-                    console.log("Microphone permission:", permissionStatus.state);
-                });
-            }
-        });
-    </script>
     <!-- azure -->
     <script src="https://aka.ms/csspeech/jsbrowserpackageraw"></script>
-
-    
    <!-- DirectLine API -->
     <script src="https://cdn.jsdelivr.net/npm/botframework-directlinejs@latest/dist/directline.js"></script>
  <!-- Office JavaScript API -->
@@ -40,9 +29,6 @@
             <h4>Interact with your document through chat!</h4>
         </div>
     </header>
-    <!-- <section id="sideload-msg" class="ms-welcome__main">
-        <h2 class="ms-font-xl">Interact with your document through chat!</h2>
-    </section> -->
     <main id="app-body" class="ms-welcome__main" style="display: block;">
         <!-- Chat window -->
          <div class="chat-window-main">
@@ -60,24 +46,6 @@
     </main>
     
     <script type="text/javascript" src="taskpane.js"></script>
-    <!-- <script>
-        document.getElementById('startSpeechButton').addEventListener('click', function () {
-            // Open a pop-up window
-            const popup = window.open('speech.html', 'SpeechRecognition', 'width=400,height=300');
-
-            // Listen for messages from the pop-up window
-            window.addEventListener("message", function (event) {
-                if (event.origin !== window.location.origin) return; // Security check
-
-                // Get the recognized text from the pop-up
-                const transcript = event.data;
-
-                // Insert recognized text into Word document
-                console.log(transcript);
-                document.getElementById("userInput").value = transcript;
-            });
-        });
-    </script> -->
 </body>
 
 </html>
