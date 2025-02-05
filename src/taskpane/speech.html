@@ -33,6 +33,7 @@
             if (finalTranscript) {
                 console.log("Sending final Transcript********", finalTranscript);
                 window.opener.postMessage(finalTranscript, window.location.origin);
+                finalTranscript = null;
                 recognition.stop(); // Stop recognition after final sentence
             }
         };
