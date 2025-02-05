@@ -44,11 +44,13 @@ document.getElementById("insertButton").onclick = async function () {
 
 document.getElementById('startSpeechButton').addEventListener('click', function () {
   // Open a pop-up window to handle the speech
-  
+  console.log("speech started");
   const popup = window.open('speech.html', 'SpeechRecognition', 'width=400,height=300');
 speechFlag = true;
   // Listen for messages from the pop-up window
+  console.log("pop up closed and receiving message");
   window.addEventListener("message", async function (event) {
+    console.log("message received");
       var transcript = null;
       if (event.origin !== window.location.origin) return; // Security check
 
