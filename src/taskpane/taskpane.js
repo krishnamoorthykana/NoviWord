@@ -187,7 +187,7 @@ function speakText(text) {
    voice.name.includes("Microsoft Zira")||
    voice.name.includes("Samantha")
   );
-  
+  console.log("Set voice********", femaleVoice);
   const speech = new SpeechSynthesisUtterance(text);
   // speech.lang = 'en-US'; // Set language
   // speech.rate = 1; // Speed of speech (0.1 to 10)
