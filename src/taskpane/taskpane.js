@@ -86,8 +86,11 @@ function displayChatMessage(question, response, role) {
       }
       else if(response.text){
         chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`; 
-        if(speechFlag){ // Example usage:
-        speakText(response.text);
+        if(speechFlag){ 
+          ensureVoicesLoaded(() => {
+            speakText(response.text);
+        });// Example usage:
+        
         speechFlag = false;  
         }    
       }
@@ -179,13 +182,17 @@ function speakText(text) {
   console.log("Testing Text to Speech");
   let voices = window.speechSynthesis.getVoices();
   console.log("Voices******", voices);
-  let femaleVoice = voices.find(voice => voice.name.includes("Female") || voice.name.includes("Google UK English Female") || voice.name.includes("Microsoft Zira"));
+  let femaleVoice = voices.find(voice => voice.name.includes("Female") || 
+  voice.name.includes("Google UK English Female") ||
+   voice.name.includes("Microsoft Zira")||
+   voice.name.includes("Samantha")
+  );
   
   const speech = new SpeechSynthesisUtterance(text);
-  speech.lang = 'en-US'; // Set language
-  speech.rate = 1; // Speed of speech (0.1 to 10)
-  speech.pitch = 1; // Pitch (0 to 2)
-  speech.volume = 1; // Volume (0 to 1)
+  // speech.lang = 'en-US'; // Set language
+  // speech.rate = 1; // Speed of speech (0.1 to 10)
+  // speech.pitch = 1; // Pitch (0 to 2)
+  // speech.volume = 1; // Volume (0 to 1)
   if (femaleVoice) {
     speech.voice = femaleVoice;
 } else {
@@ -193,6 +200,19 @@ function speakText(text) {
 }
   window.speechSynthesis.speak(speech);
 }
+
+
+// Load voices properly before calling the function
+function ensureVoicesLoaded(callback) {
+  let voices = window.speechSynthesis.getVoices();
+  
+  if (voices.length > 0) {
+      callback();
+  } else {
+      window.speechSynthesis.onvoiceschanged = callback;
+  }
+}
+
 
 document.getElementById('startSpeechButton').addEventListener('click', function () {
   // Open a pop-up window
