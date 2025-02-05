@@ -178,6 +178,7 @@ function scrollToBottom() {
 function speakText(text) {
   console.log("Testing Text to Speech");
   let voices = window.speechSynthesis.getVoices();
+  console.log("Voices******", voices);
   let femaleVoice = voices.find(voice => voice.name.includes("Female") || voice.name.includes("Google UK English Female") || voice.name.includes("Microsoft Zira"));
   
   const speech = new SpeechSynthesisUtterance(text);
