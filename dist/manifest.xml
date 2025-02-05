@@ -8,7 +8,7 @@
   <Icons>
     <Icon>
         <Size>16</Size>
-        <DefaultValue>https://krishnamoorthykana.github.io/NoviWord/assets/icon-32.png</DefaultValue>
+        <DefaultValue>https://krishnamoorthykana.github.io/NoviWord/assets/icon-16.png</DefaultValue>
     </Icon>
   </Icons>
   <Description DefaultValue="A template to get started."/>
