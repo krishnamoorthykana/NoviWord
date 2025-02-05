@@ -1,54 +1,32 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 
-const botUrl= "https://148a369decc3eeda85b913c1e80b9a.da.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cra27_agent123/directline/token?api-version=2022-03-01-preview";
-const welcomeMsg = "Hi, I am your word assistant bot-NoviWord";
-const changeMsg = "Requested changes have been made in the document";
-const sowMsg = "SOW content generated in document";
-const tableMsg = "Table has been generated in document";
-const botMessageTemplate = (message) => `
-  <div class="bot-wrapper">
-    <img width="20" height="20" src="../../assets/copilot.png"/> NoviWord
-  </div>
-  <div class="message bot">${message}</div>
-`;
-const userMessageTemplate = (message) => `
-  <div class="user-wrapper">You</div>
-  <div class="message user">${message}</div>
-`;
 let speechFlag = false;
 
 Office.onReady(async function (info) {
-  displayStartingMessage(welcomeMsg);
+  displayStartingMessage("Hi! I'm NoviWord, your Word assistant bot. I can help you create documents, modify content, and insert useful information seamlessly. How can I assist you today?");
   let directLine1 = await initializeDirectLine();
 if (info.host === Office.HostType.Word) {
-  //let flag=true;
- 
-document.getElementById("askButton").onclick = async function () {
+document.getElementById("sendButton").onclick = async function () {
   const question = document.getElementById("userInput").value;
   if (question) {
-    document.getElementById("headerId").style.display = "none";
     displayChatMessage(question, '', "User",directLine1);
       await getBotResponse(directLine1, question);
-   
- 
   }
 };
- 
+
 document.getElementById("userInput").addEventListener("keydown", async function (event) {
   if (event.key === "Enter") {
     // Check if Enter key is pressed
-    event.preventDefault(); // Prevents the default behavior (like submitting a form)
- 
+    event.preventDefault(); 
     const question = document.getElementById("userInput").value;
     if (question) {
-      //document.getElementById("headerId").style.display = "none";
         displayChatMessage(question, '', "User",directLine1);
       await getBotResponse(directLine1, question);
-     
+      
   }
 }});
- 
+
 // Handle the Insert button click
 document.getElementById("insertButton").onclick = async function () {
   const response = document.getElementById("chatWindow").lastChild
@@ -58,68 +36,59 @@ document.getElementById("insertButton").onclick = async function () {
     await insertResponseIntoDocument(response);
   }
 };
- 
+
 document.getElementById('startSpeechButton').addEventListener('click', function () {
   // Open a pop-up window to handle the speech
-  const popup = window.open('speech.html', 'SpeechRecognition', 'width=400,height=300');
+  mic.classList.toggle("recording");
+  const popup = window.open('speech.html', 'SpeechRecognition', 'width=1,height=1');
   speechFlag = true;
   // Listen for messages from the pop-up window
   window.addEventListener("message", async function eventHandler(event){
       if (event.origin !== window.location.origin) return; // Security check
- 
       // Get the recognized text from the pop-up
       transcript = event.data;
- 
       // Insert recognized text into user input
       console.log(transcript);
       document.getElementById("userInput").value = transcript;
-      var question = document.getElementById("userInput").value ;
+      var question = document.getElementById("userInput").value  ;
     if (question) {
-        document.getElementById("userInput").innerText="";
+        document.getElementById("userInput").value ="";
         displayChatMessage(question, '', "User");
         await getBotResponse(directLine1, question);
       }
       popup.close();
+      mic.classList.toggle("recording");
       window.removeEventListener("message", eventHandler);
   }, { once: true });
 });
- 
 }
 });
- 
+
 function displayStartingMessage(starter) {
   const chatWindow = document.getElementById("chatWindow");
- 
-  chatWindow.innerHTML += botMessageTemplate(starter);
-   
+  
+  chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${starter}</div>`; 
+    
 }
- 
- 
 // Display user question and bot response in chat window
 function displayChatMessage(question, response, role,directLine) {
   const chatWindow = document.getElementById("chatWindow");
- 
   // Check if response is valid and if attachments exist
   // eslint-disable-next-line no-constant-condition
   if (response && response.attachments && response.attachments.length > 0 && false) {
     response.attachments.forEach((attachment) => {
-      // Check if attachment content has 'buttons' and 'signin' type
+      
       if (attachment.content && attachment.content.buttons && attachment.content.buttons.length > 0) {
         attachment.content.buttons.forEach((button) => {
           if (button.type === "signin") {
-            // Create a sign-in button
             const signinButton = document.createElement("button");
-            signinButton.innerText = button.title || "Sign In"; // Default title to "Sign In"
+            signinButton.innerText = button.title || "Sign In"; 
             signinButton.classList.add("ms-Button", "ms-Button--primary");
- 
-            // Open the sign-in URL when the button is clicked
             signinButton.onclick = () => {
-              window.open(button.value, "_blank"); // Open the sign-in URL in a new tab
+              window.open(button.value, "_blank"); 
             };
- 
-            // Display the bot's message
             chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">${attachment.content.text}</div>`;
-            chatWindow.appendChild(signinButton); // Add the button after the message
+            chatWindow.appendChild(signinButton); 
           }
         });
       }
@@ -128,25 +97,22 @@ function displayChatMessage(question, response, role,directLine) {
     // Regular message display if no attachments
     if (role === "bot") {
       if(response.speak==="Generate"){
- 
         insertResponseIntoDocument(response.text);
-        chatWindow.innerHTML += botMessageTemplate(sowMsg);
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">SOW content generated in document</div>`; 
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText(sowMsg);
+            speakText("S.O.W. content generated in document");
         });
-       
         speechFlag = false;  
         }
       }else if(response.speak==="Table"){
- 
+
         insertResponseIntoDocumentAtCursor(response.text);
-        chatWindow.innerHTML += botMessageTemplate(tableMsg);     
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">Table has been generated in document</div>`;      
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText(tableMsg);
+            speakText("Table has been generated in document");
         });
-       
         speechFlag = false;  
         }
       }
@@ -159,7 +125,6 @@ function displayChatMessage(question, response, role,directLine) {
           ensureVoicesLoaded(() => {
             speakText(`Replaced ${textArray[0]} with ${textArray[1]}`);
         });
-       
         speechFlag = false;  
         }
       }
@@ -169,59 +134,54 @@ function displayChatMessage(question, response, role,directLine) {
       }
       else if(response.speak==="paragraph"){
         setSelectedText(response.text);
-        chatWindow.innerHTML += botMessageTemplate(changeMsg);  
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">Requested changes have been made in the document</div>`;  
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText(changeMsg);
+            speakText("Requested changes have been made in the document");
         });
-       
         speechFlag = false;  
-        }
+        } 
       }
       else if(response.speak==="interim"){
-        chatWindow.innerHTML += botMessageTemplate(response.text);
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText(response.text);
         });
-       
         }      
       }
-   
+    
       else if(response.text){
-        chatWindow.innerHTML += botMessageTemplate(response.text);
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;
+        document.getElementById("insertButton").style.display = "block";
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText(response.text);
         });
-       
         speechFlag = false;  
         }      
       }
-     
-    }
+    } 
     else {
       if(question){
-        chatWindow.innerHTML += userMessageTemplate(question);      
+        document.getElementById("insertButton").style.display = "none";
+        chatWindow.innerHTML += `<div class="user-wrapper">You</div><div class="message user">${question}</div>`;      
       }
-     
     }
   }
   scrollToBottom();
-  // Clear the input field
   document.getElementById("userInput").value = "";
 }
- 
+
 // Function to insert the response into the Word document
 async function insertResponseIntoDocument(response) {
-  console.log("response inside insert", response);
   await Word.run(async (context) => {
     const body = context.document.body;
     body.insertHtml(response, Word.InsertLocation.end);
     await context.sync();
   });
 }
- 
+
 async function insertResponseIntoDocumentAtCursor(response) {
   await Word.run(async (context) => {
     const body = context.document.body;
@@ -232,17 +192,13 @@ async function insertResponseIntoDocumentAtCursor(response) {
 const initializeDirectLine = async function () {
   try {
     const response = await fetch(
-      botUrl
+      "https://148a369decc3eeda85b913c1e80b9a.da.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cra27_agent123/directline/token?api-version=2022-03-01-preview"
     );
     const data = await response.json();
-   
     const directLine = new window.DirectLine.DirectLine({ token: data.token });
-   
- 
     if (!directLine || !directLine.activity$) {
       throw new Error("DirectLine instance failed to initialize");
     }
- 
     directLine
       .postActivity({
         from: { id: "10", name: "User" },
@@ -253,14 +209,12 @@ const initializeDirectLine = async function () {
         (id) => console.log("Message sent with ID:", id),
         (error) => console.error("Error sending message:", error)
       );
- 
     directLine.activity$.subscribe((activity) => {
       console.log("Testing activity: ", activity);
       console.log("Role", activity.from.role);
       if (activity.type === "message" && activity.from.id !== "10" && !activity.recipient) {
         console.log("Bot Response: ", activity.text);
         displayChatMessage(false, activity, activity.from.role,directLine);
-       
       }
     });
     return directLine;
@@ -268,7 +222,7 @@ const initializeDirectLine = async function () {
     console.error("Error initializing DirectLine:", error);
   }
 };
- 
+
 const getBotResponse = async function (directLine, question) {
   directLine
     .postActivity({
@@ -280,29 +234,27 @@ const getBotResponse = async function (directLine, question) {
       (id) => console.log("Message sent with ID:", id),
       (error) => console.error("Error sending message:", error)
     );
- 
+  
 }
 function scrollToBottom() {
   const chatWindow = document.getElementById("chatWindow");
   setTimeout(() => {
     chatWindow.scrollTop = chatWindow.scrollHeight;
-  }, 100); // Timeout ensures scroll happens after the new message is rendered
+  }, 100);
 }
- 
+
 async function replaceText(oldText,NewText){
   await Word.run(async (context) => {
     let results = context.document.body.search(oldText);
     results.load();
     await context.sync();
-   
     results.items.forEach(item => {
         item.insertText(NewText, Word.InsertLocation.replace);
     });
-   
     await context.sync();
 });
 }
- 
+
 async function getSelectedText(directLine) {
   await Word.run(async (context) => {
     let range = context.document.getSelection();
@@ -311,34 +263,24 @@ async function getSelectedText(directLine) {
     SelText=range.text;
     await getBotResponse(directLine, SelText);
 });
- 
 }
- 
+
 async function setSelectedText(response) {
   await Word.run(async (context) => {
-    const selection = context.document.getSelection();
-    selection.insertText(response, Word.InsertLocation.replace);
-    await context.sync();
+    const selection = context.document.getSelection(); 
+    selection.insertText(response, Word.InsertLocation.replace); 
+    await context.sync(); 
   });
 }
- 
- 
- 
+
 function speakText(text) {
-  console.log("Testing Text to Speech");
   let voices = window.speechSynthesis.getVoices();
-  console.log("Voices******", voices);
   let femaleVoice = voices.find(voice => voice.name.includes("Female") ||
   voice.name.includes("Google UK English Female") ||
    voice.name.includes("Microsoft Zira")||
    voice.name.includes("Samantha")
   );
-  console.log("Set voice********", femaleVoice);
   const speech = new SpeechSynthesisUtterance(text);
-  // speech.lang = 'en-US'; // Set language
-  // speech.rate = 1; // Speed of speech (0.1 to 10)
-  // speech.pitch = 1; // Pitch (0 to 2)
-  // speech.volume = 1; // Volume (0 to 1)
   if (femaleVoice) {
     speech.voice = femaleVoice;
 } else {
@@ -346,16 +288,12 @@ function speakText(text) {
 }
   window.speechSynthesis.speak(speech);
 }
- 
- 
 // Load voices properly before calling the function
 function ensureVoicesLoaded(callback) {
   let voices = window.speechSynthesis.getVoices();
- 
   if (voices.length > 0) {
       callback();
   } else {
       window.speechSynthesis.onvoiceschanged = callback;
   }
 }
- 
