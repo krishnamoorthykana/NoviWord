@@ -207,8 +207,8 @@ speechFlag = true;
       // Insert recognized text into Word document
       console.log(transcript);
       document.getElementById("userInput").value = transcript;
+      popup.close();
   });
-  popup.close();
 });
 
 
