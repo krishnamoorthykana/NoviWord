@@ -87,10 +87,10 @@ function displayChatMessage(question, response, role) {
       else if(response.text){
         chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`; 
         if(speechFlag){ 
-        //   ensureVoicesLoaded(() => {
-        //     speakText(response.text);
-        // });// Example usage:
-        speakText(response.text);
+          ensureVoicesLoaded(() => {
+            speakText(response.text);
+        });// Example usage:
+        
         speechFlag = false;  
         }    
       }
@@ -180,42 +180,42 @@ function scrollToBottom() {
 
 function speakText(text) {
   console.log("Testing Text to Speech");
-  // let voices = window.speechSynthesis.getVoices();
-  // console.log("Voices******", voices);
-  // let femaleVoice = voices.find(voice => voice.name.includes("Female") || 
-  // voice.name.includes("Google UK English Female") ||
-  //  voice.name.includes("Microsoft Zira")||
-  //  voice.name.includes("Samantha")
-  // );
-  // console.log("Set voice********", femaleVoice);
+  let voices = window.speechSynthesis.getVoices();
+  console.log("Voices******", voices);
+  let femaleVoice = voices.find(voice => voice.name.includes("Female") || 
+  voice.name.includes("Google UK English Female") ||
+   voice.name.includes("Microsoft Zira")||
+   voice.name.includes("Samantha")
+  );
+  console.log("Set voice********", femaleVoice);
   const speech = new SpeechSynthesisUtterance(text);
-  speech.lang = 'hi-IN'; // Set language
-  speech.rate = 1; // Speed of speech (0.1 to 10)
-  speech.pitch = 1; // Pitch (0 to 2)
-  speech.volume = 1; // Volume (0 to 1)
-//   if (femaleVoice) {
-//     speech.voice = femaleVoice;
-// } else {
-//     console.warn("Female voice not found. Using default voice.");
-// }
+  // speech.lang = 'en-US'; // Set language
+  // speech.rate = 1; // Speed of speech (0.1 to 10)
+  // speech.pitch = 1; // Pitch (0 to 2)
+  // speech.volume = 1; // Volume (0 to 1)
+  if (femaleVoice) {
+    speech.voice = femaleVoice;
+} else {
+    console.warn("Female voice not found. Using default voice.");
+}
   window.speechSynthesis.speak(speech);
 }
 
 
 // Load voices properly before calling the function
-// function ensureVoicesLoaded(callback) {
-//   let voices = window.speechSynthesis.getVoices();
+function ensureVoicesLoaded(callback) {
+  let voices = window.speechSynthesis.getVoices();
   
-//   if (voices.length > 0) {
-//       callback();
-//   } else {
-//       window.speechSynthesis.onvoiceschanged = callback;
-//   }
-// }
+  if (voices.length > 0) {
+      callback();
+  } else {
+      window.speechSynthesis.onvoiceschanged = callback;
+  }
+}
 
 
 document.getElementById('startSpeechButton').addEventListener('click', function () {
-  // Open a pop-up window
+  // Open a pop-up window to handle the speech
   const popup = window.open('speech.html', 'SpeechRecognition', 'width=400,height=300');
 speechFlag = true;
   // Listen for messages from the pop-up window
@@ -225,7 +225,7 @@ speechFlag = true;
       // Get the recognized text from the pop-up
       const transcript = event.data;
 
-      // Insert recognized text into Word document
+      // Insert recognized text into user input 
       console.log(transcript);
       document.getElementById("userInput").value = transcript;
       popup.close();
