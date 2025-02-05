@@ -1,25 +1,13 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
-
-const botUrl= "https://148a369decc3eeda85b913c1e80b9a.da.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cra27_agent123/directline/token?api-version=2022-03-01-preview";
-const welcomeMsg = "Hi, I am your word assistant bot-NoviWord";
-const changeMsg = "Requested changes have been made in the document";
-const sowMsg = "SOW content generated in document";
-const tableMsg = "Table has been generated in document";
-const botMessageTemplate = (message) => `
-  <div class="bot-wrapper">
-    <img width="20" height="20" src="../../assets/copilot.png"/> NoviWord
-  </div>
-  <div class="message bot">${message}</div>
-`;
-const userMessageTemplate = (message) => `
-  <div class="user-wrapper">You</div>
-  <div class="message user">${message}</div>
-`;
+ 
+ 
+ 
+//const { split } = require("core-js/fn/symbol");
 let speechFlag = false;
-
+ 
 Office.onReady(async function (info) {
-  displayStartingMessage(welcomeMsg);
+  displayStartingMessage("Hi, I am your word assistant bot-NoviWord");
   let directLine1 = await initializeDirectLine();
 if (info.host === Office.HostType.Word) {
   //let flag=true;
@@ -72,8 +60,8 @@ document.getElementById('startSpeechButton').addEventListener('click', function 
  
       // Insert recognized text into user input
       console.log(transcript);
-      document.getElementById("userInput").value = transcript;
-      var question = document.getElementById("userInput").value ;
+      document.getElementById("userInput").innerText = transcript;
+      var question = document.getElementById("userInput").innerText ;
     if (question) {
         document.getElementById("userInput").innerText="";
         displayChatMessage(question, '', "User");
@@ -90,7 +78,7 @@ document.getElementById('startSpeechButton').addEventListener('click', function 
 function displayStartingMessage(starter) {
   const chatWindow = document.getElementById("chatWindow");
  
-  chatWindow.innerHTML += botMessageTemplate(starter);
+  chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">${starter}</div>`;
    
 }
  
@@ -130,10 +118,10 @@ function displayChatMessage(question, response, role,directLine) {
       if(response.speak==="Generate"){
  
         insertResponseIntoDocument(response.text);
-        chatWindow.innerHTML += botMessageTemplate(sowMsg);
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">SOW content generated in document</div>`;
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText(sowMsg);
+            speakText("SOW content generated in document");
         });
        
         speechFlag = false;  
@@ -141,10 +129,10 @@ function displayChatMessage(question, response, role,directLine) {
       }else if(response.speak==="Table"){
  
         insertResponseIntoDocumentAtCursor(response.text);
-        chatWindow.innerHTML += botMessageTemplate(tableMsg);     
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">Table has been generated in document</div>`;      
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText(tableMsg);
+            speakText("Table has been generated in document");
         });
        
         speechFlag = false;  
@@ -154,7 +142,7 @@ function displayChatMessage(question, response, role,directLine) {
         splitText=response.text
         textArray=splitText.split("|");
         replaceText(textArray[0],textArray[1]);
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">Replaced ${textArray[0]} with ${textArray[1]} </div>`;      
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">Replaced ${textArray[0]} with ${textArray[1]} </div>`;      
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText(`Replaced ${textArray[0]} with ${textArray[1]}`);
@@ -169,17 +157,17 @@ function displayChatMessage(question, response, role,directLine) {
       }
       else if(response.speak==="paragraph"){
         setSelectedText(response.text);
-        chatWindow.innerHTML += botMessageTemplate(changeMsg);  
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">Requested changes have been made in the document</div>`;  
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText(changeMsg);
+            speakText("Requested changes have been made in the document");
         });
        
         speechFlag = false;  
         }
       }
       else if(response.speak==="interim"){
-        chatWindow.innerHTML += botMessageTemplate(response.text);
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText(response.text);
@@ -189,7 +177,7 @@ function displayChatMessage(question, response, role,directLine) {
       }
    
       else if(response.text){
-        chatWindow.innerHTML += botMessageTemplate(response.text);
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText(response.text);
@@ -202,8 +190,8 @@ function displayChatMessage(question, response, role,directLine) {
     }
     else {
       if(question){
-        chatWindow.innerHTML += userMessageTemplate(question);      
-      }
+     
+        chatWindow.innerHTML += `<div class="user-wrapper">You</div><div class="message user">${question}</div>`;      }
      
     }
   }
@@ -214,7 +202,6 @@ function displayChatMessage(question, response, role,directLine) {
  
 // Function to insert the response into the Word document
 async function insertResponseIntoDocument(response) {
-  console.log("response inside insert", response);
   await Word.run(async (context) => {
     const body = context.document.body;
     body.insertHtml(response, Word.InsertLocation.end);
@@ -232,7 +219,7 @@ async function insertResponseIntoDocumentAtCursor(response) {
 const initializeDirectLine = async function () {
   try {
     const response = await fetch(
-      botUrl
+      "https://148a369decc3eeda85b913c1e80b9a.da.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cra27_agent123/directline/token?api-version=2022-03-01-preview"
     );
     const data = await response.json();
    
