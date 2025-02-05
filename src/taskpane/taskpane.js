@@ -177,12 +177,19 @@ function scrollToBottom() {
 
 function speakText(text) {
   console.log("Testing Text to Speech");
+  let voices = window.speechSynthesis.getVoices();
+  let femaleVoice = voices.find(voice => voice.name.includes("Female") || voice.name.includes("Google UK English Female") || voice.name.includes("Microsoft Zira"));
+  
   const speech = new SpeechSynthesisUtterance(text);
   speech.lang = 'en-US'; // Set language
   speech.rate = 1; // Speed of speech (0.1 to 10)
   speech.pitch = 1; // Pitch (0 to 2)
   speech.volume = 1; // Volume (0 to 1)
-
+  if (femaleVoice) {
+    speech.voice = femaleVoice;
+} else {
+    console.warn("Female voice not found. Using default voice.");
+}
   window.speechSynthesis.speak(speech);
 }
 
@@ -201,6 +208,7 @@ speechFlag = true;
       console.log(transcript);
       document.getElementById("userInput").value = transcript;
   });
+  popup.close();
 });
 
 
