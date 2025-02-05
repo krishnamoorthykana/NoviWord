@@ -58,7 +58,7 @@ speechFlag = true;
       document.getElementById("userInput").value = transcript;
       const question = document.getElementById("userInput").value;
     if (question) {
-     
+        console.log("Testing inside speech if question");
         displayChatMessage(question, '', "User");
       await getBotResponse(directLine1, question);
      
