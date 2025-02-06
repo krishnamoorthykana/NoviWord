@@ -10,6 +10,7 @@ if (info.host === Office.HostType.Word) {
 document.getElementById("sendButton").onclick = async function () {
   const question = document.getElementById("userInput").value;
   if (question) {
+    document.getElementById("headerId").style.display = "none";
     displayChatMessage(question, '', "User",directLine1);
       await getBotResponse(directLine1, question);
   }
@@ -21,6 +22,7 @@ document.getElementById("userInput").addEventListener("keydown", async function 
     event.preventDefault(); 
     const question = document.getElementById("userInput").value;
     if (question) {
+      document.getElementById("headerId").style.display = "none";
         displayChatMessage(question, '', "User",directLine1);
       await getBotResponse(directLine1, question);
       

@@ -5,32 +5,6 @@
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="NoviWord"/>
-  <DisplayIcon>
-  <Icons>
-    <Icon>
-        <Size>16</Size>
-        <DefaultValue>https://krishnamoorthykana.github.io/NoviWord/assets/icon-16.png</DefaultValue>
-    </Icon>
-    <Icon>
-        <Size>32</Size>
-        <DefaultValue>https://krishnamoorthykana.github.io/NoviWord/assets/icon-32.png</DefaultValue>
-    </Icon>
-    <Icon>
-        <Size>64</Size>
-        <DefaultValue>https://krishnamoorthykana.github.io/NoviWord/assets/icon-64.png</DefaultValue>
-    </Icon>
-    <Icon>
-        <Size>80</Size>
-        <DefaultValue>https://krishnamoorthykana.github.io/NoviWord/assets/icon-80.png</DefaultValue>
-    </Icon>
-  </Icons>
-  </DisplayIcon>
-  <Label resid="CommandsGroup.Label"/>
-                <Icon>
-                  <bt:Image size="16" resid="Icon.16x16"/>
-                  <bt:Image size="32" resid="Icon.32x32"/>
-                  <bt:Image size="80" resid="Icon.80x80"/>
-                </Icon>
   <Description DefaultValue="A template to get started."/>
   <IconUrl DefaultValue="https://krishnamoorthykana.github.io/NoviWord/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://krishnamoorthykana.github.io/NoviWord/assets/icon-64.png"/>
