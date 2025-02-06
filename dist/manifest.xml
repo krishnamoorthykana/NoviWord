@@ -5,6 +5,7 @@
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="NoviWord"/>
+  <DisplayIcon>
   <Icons>
     <Icon>
         <Size>16</Size>
@@ -23,6 +24,7 @@
         <DefaultValue>https://krishnamoorthykana.github.io/NoviWord/assets/icon-80.png</DefaultValue>
     </Icon>
   </Icons>
+  </DisplayIcon>
   <Label resid="CommandsGroup.Label"/>
                 <Icon>
                   <bt:Image size="16" resid="Icon.16x16"/>
