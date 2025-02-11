@@ -1,10 +1,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
  
+ 
+ 
+ 
+//const { split } = require("core-js/fn/symbol");
 let speechFlag = false;
+let popup=null;
  
 Office.onReady(async function (info) {
-  displayStartingMessage("Hi! I'm NoviWord, your Word assistant bot. I can help you create documents, modify content, and insert useful information seamlessly. How can I assist you today?");
+  displayStartingMessage("Hi! I'm NoviPilot, your Word assistant bot. I can help you create documents, modify content, and insert useful information seamlessly. How can I assist you today?");
   let directLine1 = await initializeDirectLine();
 if (info.host === Office.HostType.Word) {
   //let flag=true;
@@ -15,6 +20,8 @@ document.getElementById("sendButton").onclick = async function () {
     //document.getElementById("headerId").style.display = "none";
     displayChatMessage(question, '', "User",directLine1);
       await getBotResponse(directLine1, question);
+   
+ 
   }
 };
  
@@ -27,7 +34,8 @@ document.getElementById("userInput").addEventListener("keydown", async function 
     if (question) {
       //document.getElementById("headerId").style.display = "none";
         displayChatMessage(question, '', "User",directLine1);
-      await getBotResponse(directLine1, question); 
+      await getBotResponse(directLine1, question);
+     
   }
 }});
  
@@ -43,8 +51,26 @@ document.getElementById("insertButton").onclick = async function () {
  
 document.getElementById('startSpeechButton').addEventListener('click', function () {
   // Open a pop-up window to handle the speech
+ //console.log("popup:",popup);
+ console.log("spFlag",speechFlag);
+  if(speechFlag){
+    mic.classList.toggle("recording");
+    speechFlag=false;
+    try{
+      popup.close();
+    }
+    catch{
+      console.log("popup closed")
+    }
+   
+  }
+  else{
   mic.classList.toggle("recording");
-  const popup = window.open('speech.html', 'SpeechRecognition', 'width=1,height=1');
+  popup = window.open(
+    'speech.html',
+    'SpeechRecognition',
+    'width=1,height=1'
+  );
   speechFlag = true;
   // Listen for messages from the pop-up window
   window.addEventListener("message", async function eventHandler(event){
@@ -55,17 +81,29 @@ document.getElementById('startSpeechButton').addEventListener('click', function 
  
       // Insert recognized text into user input
       console.log(transcript);
+      if(transcript==="NoSpeech"){
+        popup.close();
+        speechFlag=false;
+        mic.classList.toggle("recording");
+        window.removeEventListener("message", eventHandler);
+      }
+      else{
       document.getElementById("userInput").value = transcript;
       var question = document.getElementById("userInput").value  ;
     if (question) {
         document.getElementById("userInput").value ="";
         displayChatMessage(question, '', "User");
+        const micButton=document.getElementById("startSpeechButton")//disable mic
+        micButton.disabled=true;
         await getBotResponse(directLine1, question);
       }
       popup.close();
+     
       mic.classList.toggle("recording");
       window.removeEventListener("message", eventHandler);
-  }, { once: true });
+  }}, { once: true });
+ 
+}
 });
  
 }
@@ -74,7 +112,7 @@ document.getElementById('startSpeechButton').addEventListener('click', function 
 function displayStartingMessage(starter) {
   const chatWindow = document.getElementById("chatWindow");
  
-  chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${starter}</div>`;
+  chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">${starter}</div>`;
    
 }
  
@@ -82,10 +120,11 @@ function displayStartingMessage(starter) {
 // Display user question and bot response in chat window
 async function displayChatMessage(question, response, role,directLine) {
   const chatWindow = document.getElementById("chatWindow");
+  console.log("displayfunction called");
  
   // Check if response is valid and if attachments exist
   // eslint-disable-next-line no-constant-condition
-  if (response && response.attachments && response.attachments.length > 0) {
+  if (response && response.attachments && response.attachments.length > 0 && false) {
     response.attachments.forEach((attachment) => {
       // Check if attachment content has 'buttons' and 'signin' type
       if (attachment.content && attachment.content.buttons && attachment.content.buttons.length > 0) {
@@ -102,7 +141,7 @@ async function displayChatMessage(question, response, role,directLine) {
             };
  
             // Display the bot's message
-            chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${attachment.content.text}</div>`;
+            chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">${attachment.content.text}</div>`;
             chatWindow.appendChild(signinButton); // Add the button after the message
           }
         });
@@ -114,46 +153,47 @@ async function displayChatMessage(question, response, role,directLine) {
       if(response.speak==="Generate"){
  
         insertResponseIntoDocument(response.text);
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">SOW content generated in document</div>`;
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">SOW content generated in document</div>`;
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText("S.O.W. content generated in document");
         });
        
-        speechFlag = false;  
+        //speechFlag = false;  
         }
       }else if(response.speak==="Table"){
  
         insertResponseIntoDocumentAtCursor(response.text, "end");
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">Table has been generated in document</div>`;      
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">Table has been generated in document</div>`;      
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText("Table has been generated in document");
         });
        
-        speechFlag = false;  
+        //speechFlag = false;  
         }
       }
       else if(response.speak==="TableReplace"){
-       
+        let statusflag=false;
         statusflag=await insertResponseIntoDocumentAtCursor(response.text,"replace");
+        console.log(statusflag);
         if(statusflag){
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">Table has been generated in document</div>`;      
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">Table has been generated in document</div>`;      
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText("Table has been replaced in document");
+            speakText("Table has been generated in document");
         });
        
-        speechFlag = false;  
+        //speechFlag = false;  
         }}
         else{
-          chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">No table has been selected in the document</div>`;      
+          chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">No table is selected in the document</div>`;      
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText("No table has been selected in the document");
+            speakText("No table is selected in the document");
         });
        
-        speechFlag = false;  
+        //speechFlag = false;  
         }
         }
       }
@@ -161,13 +201,13 @@ async function displayChatMessage(question, response, role,directLine) {
         splitText=response.text
         textArray=splitText.split("|");
         replaceText(textArray[0],textArray[1]);
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">Replaced ${textArray[0]} with ${textArray[1]} </div>`;      
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">Replaced ${textArray[0]} with ${textArray[1]} </div>`;      
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText(`Replaced ${textArray[0]} with ${textArray[1]}`);
         });
        
-        speechFlag = false;  
+        //speechFlag = false;  
         }
       }
       else if(response.speak==="Selected"){
@@ -182,17 +222,17 @@ async function displayChatMessage(question, response, role,directLine) {
       }
       else if(response.speak==="paragraph"){
         setSelectedText(response.text);
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">Requested changes have been made in the document</div>`;  
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">Requested changes have been made in the document</div>`;  
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText("Requested changes have been made in the document");
         });
        
-        speechFlag = false;  
+        //speechFlag = false;  
         }
       }
       else if(response.speak==="interim"){
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText(response.text);
@@ -202,14 +242,15 @@ async function displayChatMessage(question, response, role,directLine) {
       }
    
       else if(response.text){
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;
+        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="assets/copilot.png"/> NoviWord</div><div class="message bot">${response.text}</div>`;
         document.getElementById("insertButton").style.display = "block";
         if(speechFlag){
+          console.log("speaking bot message");
           ensureVoicesLoaded(() => {
             speakText(response.text);
         });
        
-        speechFlag = false;  
+        //speechFlag = false;  
         }      
       }
      
@@ -238,13 +279,14 @@ async function insertResponseIntoDocument(response) {
 async function insertResponseIntoDocumentAtCursor(response, insertAt) {
   if (insertAt === "end") {
     console.log("end of doc table");
-    await Word.run(async (context) => {
+    return await Word.run(async (context) => {
       const body = context.document.body;
       body.insertHtml(response, Word.InsertLocation.end);
       await context.sync();
+      return true;
     });
   } else {
-    await Word.run(async (context) => {
+    return await Word.run(async (context) => {
       const selection = context.document.getSelection();
       selection.load("parentTable");
       await context.sync();
@@ -340,18 +382,24 @@ function scrollToBottom() {
   }, 100); // Timeout ensures scroll happens after the new message is rendered
 }
  
-async function replaceText(oldText,NewText){
+async function replaceText(oldText, newText) {
   await Word.run(async (context) => {
-    let results = context.document.body.search(oldText);
-    results.load();
-    await context.sync();
-   
-    results.items.forEach(item => {
-        item.insertText(NewText, Word.InsertLocation.replace);
-    });
-   
-    await context.sync();
-});
+      let results = context.document.body.search(oldText, { matchCase: false });
+      results.load("items");
+      await context.sync();
+ 
+      console.log("Results found:", results.items.length);
+ 
+     
+      for (let i = results.items.length - 1; i >= 0; i--) {
+          let item = results.items[i];
+          console.log("Replacing:", item.text);
+          item.insertText(newText, Word.InsertLocation.replace);
+      }
+ 
+      await context.sync();
+      console.log("ll instances replaced successfully.");
+  });
 }
  
 async function getSelectedText(directLine) {
@@ -408,23 +456,52 @@ async function setSelectedText(response) {
  
  
  
-function speakText(text) {
+async function speakText(text) {
   console.log("Testing Text to Speech");
+ 
   let voices = window.speechSynthesis.getVoices();
-  console.log("Voices******", voices);
-  let femaleVoice = voices.find(voice => voice.name.includes("Female") ||
-  voice.name.includes("Google UK English Female") ||
-   voice.name.includes("Microsoft Zira")||
-   voice.name.includes("Samantha")
+  console.log("Voices:", voices);
+ 
+  let femaleVoice = voices.find(voice =>
+    voice.name.includes("Female") ||
+    voice.name.includes("Google UK English Female") ||
+    voice.name.includes("Microsoft Zira") ||
+    voice.name.includes("Samantha")
   );
-  console.log("Set voice********", femaleVoice);
+ 
+  console.log("Set voice:", femaleVoice);
+ 
   const speech = new SpeechSynthesisUtterance(text);
+ 
   if (femaleVoice) {
     speech.voice = femaleVoice;
-} else {
+  } else {
     console.warn("Female voice not found. Using default voice.");
-}
-  window.speechSynthesis.speak(speech);
+  }
+ 
+  return new Promise((resolve) => {
+    speech.onend = () => {
+      console.log("Speech has finished.");
+      speechFlag=false;
+      // enable mic
+      const micButton=document.getElementById("startSpeechButton")//disable mic
+      micButton.disabled=false;
+      console.log("mic enabled");
+      resolve(true);
+    };
+ 
+    speech.onerror = (event) => {
+      console.error("Speech error:", event.error);
+      speechFlag=false;
+      // enable mic
+      const micButton=document.getElementById("startSpeechButton")//disable mic
+      micButton.disabled=false;
+      console.log("mic enabled");
+      resolve(false);
+    };
+ 
+    window.speechSynthesis.speak(speech);
+  });
 }
  
  
