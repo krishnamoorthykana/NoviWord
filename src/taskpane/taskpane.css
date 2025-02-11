@@ -220,3 +220,12 @@ header h1 {
     border: 2px solid #ccc; /* Optional: Adds a border */
   }
  
+  button:disabled svg {
+    opacity: 0.5; /* Lighten the color */
+    pointer-events: none; /* Prevent hover effect */
+  }
+ 
+  button:disabled {
+    cursor: not-allowed; /* Keeps the pointer from changing */
+  }
+ 
