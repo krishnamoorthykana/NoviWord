@@ -19,6 +19,8 @@ document.getElementById("sendButton").onclick = async function () {
   if (question) {
     //document.getElementById("headerId").style.display = "none";
     displayChatMessage(question, '', "User",directLine1);
+    // call loading function
+    displayLoading();
       await getBotResponse(directLine1, question);
    
  
@@ -110,24 +112,7 @@ document.getElementById('startSpeechButton').addEventListener('click', function 
 });
  
 function displayStartingMessage(starter) {
-  const chatWindow = document.getElementById("chatWindow");
-  let loadingElement = document.getElementById("chatWindow");
-  let loadingDots = ["", ".", "..", "..."]; // Define loading states
-  let dotIndex = 0;
-
-  // Start loading animation
-  let loadingInterval = setInterval(() => {
-      loadingElement.innerHTML = `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">Loading ${loadingDots[dotIndex]}</div>`;
-      dotIndex = (dotIndex + 1) % loadingDots.length; // Cycle through array
-  }, 500); // Change dots every 500ms
-  setTimeout(() => {
-    clearInterval(loadingInterval); // Stop loading animation
-    loadingElement.innerHTML = "";
-    chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${starter}</div>`;
-   
-}, 3000); 
-  // chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${starter}</div>`;
-   
+  chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${starter}</div>`;
 }
  
  
@@ -374,6 +359,7 @@ const initializeDirectLine = async function () {
     directLine.activity$.subscribe((activity) => {
       console.log("Testing activity on send: ", activity);
       console.log("Role", activity.from.role);
+
       if (activity.type === "message" && activity.from.id !== "10" && !activity.recipient) {
         console.log("Bot Response: ", activity.text);
         displayChatMessage(false, activity, activity.from.role,directLine);
@@ -541,3 +527,21 @@ function ensureVoicesLoaded(callback) {
   }
 }
  
+
+function displayLoading(){
+let loadingElement = document.getElementById("chatWindow");
+let loadingDots = ["", ".", "..", "..."]; // Define loading states
+let dotIndex = 0;
+
+// Start loading animation
+setInterval(() => {
+    loadingElement.innerHTML = `<div id = "loader" class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">Loading ${loadingDots[dotIndex]}</div>`;
+    dotIndex = (dotIndex + 1) % loadingDots.length; // Cycle through array
+}, 500); // Change dots every 500ms
+// setTimeout(() => {
+//   clearInterval(loadingInterval); // Stop loading animation
+//   loadingElement.innerHTML = "";
+//   chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${starter}</div>`;
+ 
+// }, 3000); 
+}
