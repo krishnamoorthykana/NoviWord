@@ -111,8 +111,21 @@ document.getElementById('startSpeechButton').addEventListener('click', function 
  
 function displayStartingMessage(starter) {
   const chatWindow = document.getElementById("chatWindow");
- 
-  chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${starter}</div>`;
+  let loadingElement = document.getElementById("chatWindow");
+  let loadingDots = ["", ".", "..", "..."]; // Define loading states
+  let dotIndex = 0;
+
+  // Start loading animation
+  let loadingInterval = setInterval(() => {
+      loadingElement.innerText = loadingDots[dotIndex];
+      dotIndex = (dotIndex + 1) % loadingDots.length; // Cycle through array
+  }, 500); // Change dots every 500ms
+  setTimeout(() => {
+    clearInterval(loadingInterval); // Stop loading animation
+    chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${starter}</div>`;
+   
+}, 3000); 
+  // chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${starter}</div>`;
    
 }
  
