@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
-
+ 
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Word Chatbot Add-in</title>
-
+ 
     <!-- Office JavaScript API -->
     <script src="https://cdn.jsdelivr.net/npm/botframework-directlinejs@latest/dist/directline.js"></script>
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
-
+ 
     <!-- Fluent UI for styling -->
     <link rel="stylesheet" href="https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css"/>
-
+ 
     <!-- Custom styles -->
     <link href="taskpane.css" rel="stylesheet" type="text/css" />
 </head>
-
+ 
 <body class="ms-font-m ms-welcome ms-Fabric">
     <header class="ms-welcome__header ">
         <div id="headerId">
-            <img class="header-img" width="55" height="55" src="../../assets/copilot.png" alt="Word Chatbot" title="Word Chatbot" />
-            <h3>Interact with your document through chat!</h3>
+            <img class="header-img" src="../../assets/copilot.png" alt="Word Chatbot" title="Word Chatbot" />
+            <h3>Smart chat for smarter documents!</h3>
         </div>
     </header>
-
+ 
     <main id="app-body" class="ms-welcome__main">
         <!-- Chat window -->
         <div class="chat-window-main">
@@ -33,7 +33,7 @@
                 <div id="chatWindow" class="chat-window"></div>
             </div>
         </div>
-
+ 
         <!-- User input row -->
         <div class="input-container">
             <input type="text" id="userInput" class="input-field" placeholder="Ask a question" />
@@ -46,12 +46,14 @@
                     </svg>
             </button>
         </div>
-
+ 
         <!-- Insert button (Initially Hidden) -->
         <button id="insertButton" class="ms-Button ms-Button--hero" style="display: none;">Insert</button>
     </main>
-
+ 
     <script type="text/javascript" src="taskpane.js"></script>
 </body>
-
+ 
 </html>
+ 
+ 
