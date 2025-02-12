@@ -20,6 +20,7 @@ document.getElementById("sendButton").onclick = async function () {
     //document.getElementById("headerId").style.display = "none";
     displayChatMessage(question, '', "User",directLine1);
     // call loading function
+    console.log("Calling display function");
     displayLoading();
       await getBotResponse(directLine1, question);
    
@@ -537,7 +538,7 @@ function ensureVoicesLoaded(callback) {
  
 
 function displayLoading(){
-
+  console.log("display function called");
 let loadingElement = document.getElementById("chatWindow");
 let loadingDots = [ ".", "..", "..."]; // Define loading states
 let dotIndex = 0;
@@ -548,10 +549,4 @@ setInterval(() => {
   loader.innerText =loadingDots[dotIndex];
     dotIndex = (dotIndex + 1) % loadingDots.length; // Cycle through array
 }, 500); // Change dots every 500ms
-// setTimeout(() => {
-//   clearInterval(loadingInterval); // Stop loading animation
-//   loadingElement.innerHTML = "";
-//   chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${starter}</div>`;
- 
-// }, 3000); 
 }
