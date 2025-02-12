@@ -3,6 +3,10 @@
  
 let speechFlag = false;
 let popup=null;
+const botTemplate = `<div class="bot-wrapper">
+  <img width=20 height=20 src="../../assets/copilot.png"/> NoviWord
+</div>
+<div class="message bot">`;
  
 Office.onReady(async function (info) {
   displayStartingMessage("Hi! I'm NoviPilot, your Word assistant bot. I can help you create documents, modify content, and insert useful information seamlessly. How can I assist you today?");
@@ -101,7 +105,7 @@ document.getElementById('startSpeechButton').addEventListener('click', function 
 });
  
 function displayStartingMessage(starter) {
-  chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${starter}</div>`;
+  chatWindow.innerHTML += `${botTemplate}${starter}</div>`;
 }
  
  
@@ -152,7 +156,7 @@ async function displayChatMessage(question, response, role,directLine) {
       }else if(response.speak==="Table"){
  
         insertResponseIntoDocumentAtCursor(response.text, "end");
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">Table has been generated in document</div>`;      
+        chatWindow.innerHTML += `${botTemplate} Table has been generated in document</div>`;     
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText("Table has been generated in document");
