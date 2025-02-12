@@ -117,11 +117,12 @@ function displayStartingMessage(starter) {
 
   // Start loading animation
   let loadingInterval = setInterval(() => {
-      loadingElement.innerHTML = `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${loadingDots[dotIndex]}</div>`;
+      loadingElement.innerHTML = `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">Loading ${loadingDots[dotIndex]}</div>`;
       dotIndex = (dotIndex + 1) % loadingDots.length; // Cycle through array
   }, 500); // Change dots every 500ms
   setTimeout(() => {
     clearInterval(loadingInterval); // Stop loading animation
+    loadingElement.innerHTML = "";
     chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${starter}</div>`;
    
 }, 3000); 
