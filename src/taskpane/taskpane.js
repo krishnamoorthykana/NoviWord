@@ -1,10 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
  
- 
- 
- 
-//const { split } = require("core-js/fn/symbol");
 let speechFlag = false;
 let popup=null;
  
@@ -12,19 +8,13 @@ Office.onReady(async function (info) {
   displayStartingMessage("Hi! I'm NoviPilot, your Word assistant bot. I can help you create documents, modify content, and insert useful information seamlessly. How can I assist you today?");
   let directLine1 = await initializeDirectLine();
 if (info.host === Office.HostType.Word) {
-  //let flag=true;
- 
+
 document.getElementById("sendButton").onclick = async function () {
   const question = document.getElementById("userInput").value;
   if (question) {
     //document.getElementById("headerId").style.display = "none";
     displayChatMessage(question, '', "User",directLine1);
-    // call loading function
-    // console.log("Calling loading function");
-    // displayLoading();
-      await getBotResponse(directLine1, question);
-   
- 
+    await getBotResponse(directLine1, question);
   }
 };
  
@@ -36,10 +26,7 @@ document.getElementById("userInput").addEventListener("keydown", async function 
     const question = document.getElementById("userInput").value;
     if (question) {
       //document.getElementById("headerId").style.display = "none";
-        displayChatMessage(question, '', "User",directLine1);
-        // call loading function
-        // console.log("Calling loading function");
-        // displayLoading();
+      displayChatMessage(question, '', "User",directLine1);
       await getBotResponse(directLine1, question);
      
   }
@@ -57,8 +44,6 @@ document.getElementById("insertButton").onclick = async function () {
  
 document.getElementById('startSpeechButton').addEventListener('click', function () {
   // Open a pop-up window to handle the speech
- //console.log("popup:",popup);
- console.log("spFlag",speechFlag);
   if(speechFlag){
     mic.classList.toggle("recording");
     speechFlag=false;
@@ -101,9 +86,6 @@ document.getElementById('startSpeechButton').addEventListener('click', function 
         displayChatMessage(question, '', "User");
         const micButton=document.getElementById("startSpeechButton")//disable mic
         micButton.disabled=true;
-        // call loading function
-        // console.log("Calling loading function");
-        // displayLoading();
         await getBotResponse(directLine1, question);
       }
       popup.close();
@@ -370,15 +352,12 @@ const initializeDirectLine = async function () {
       if (activity.type === "message" && activity.from.id !== "10" && !activity.recipient) {
         console.log("Bot Response: ", activity.text);
         try{
-        //  document.getElementById("loader").style.display = "none";  
           document.getElementById("loader-container").remove(); 
           document.getElementById("loader").remove(); 
         }catch{
           console.log("could not find the element");
         }
-        
-        displayChatMessage(false, activity, activity.from.role,directLine);
-       
+        displayChatMessage(false, activity, activity.from.role,directLine); 
       }
     });
     return directLine;
@@ -416,16 +395,12 @@ async function replaceText(oldText, newText) {
       let results = context.document.body.search(oldText, { matchCase: false });
       results.load("items");
       await context.sync();
- 
       console.log("Results found:", results.items.length);
- 
-     
       for (let i = results.items.length - 1; i >= 0; i--) {
           let item = results.items[i];
           console.log("Replacing:", item.text);
           item.insertText(newText, Word.InsertLocation.replace);
       }
- 
       await context.sync();
       console.log("ll instances replaced successfully.");
   });
@@ -447,9 +422,7 @@ async function getSelectedTable(directLine) {
   await Word.run(async (context) => {
     const selection = context.document.getSelection();
     selection.load("parentTable");
- 
     await context.sync();
- 
     if (selection.parentTable) {
         const table = selection.parentTable;
         table.load("values"); // Get table content as a 2D array
@@ -482,8 +455,6 @@ async function setSelectedText(response) {
     await context.sync();
   });
 }
- 
- 
  
 async function speakText(text) {
   console.log("Testing Text to Speech");
@@ -547,15 +518,14 @@ function ensureVoicesLoaded(callback) {
  
 
 function displayLoading(){
-  console.log("Load function called");
 let loadingElement = document.getElementById("chatWindow");
-let loadingDots = [ ".", "..", "..."]; // Define loading states
+let loadingDots = [ ".", "..", "..."]; 
 let dotIndex = 1;
 loadingElement.innerHTML += `<div id="loader-container" class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div id = "loader" class="message bot">.</div>`;
-// Start loading animation
+
 let loader = document.getElementById("loader");
 setInterval(() => {
   loader.innerText =loadingDots[dotIndex];
-    dotIndex = (dotIndex + 1) % loadingDots.length; // Cycle through array
-}, 500); // Change dots every 500ms
+    dotIndex = (dotIndex + 1) % loadingDots.length; 
+}, 500); 
 }
