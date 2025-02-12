@@ -3,11 +3,15 @@
  
 let speechFlag = false;
 let popup=null;
+const tableMsg = "Table has been generated in document"; 
+const sowMsg = "S.O.W. content generated in document";
+const noTableMsg = "No table is selected in the document";
+const changeRequestMsg = "Requested changes have been made in the document";
 const botTemplate = `<div class="bot-wrapper">
   <img width=20 height=20 src="../../assets/copilot.png"/> NoviWord
 </div>
 <div class="message bot">`;
- 
+
 Office.onReady(async function (info) {
   displayStartingMessage("Hi! I'm NoviPilot, your Word assistant bot. I can help you create documents, modify content, and insert useful information seamlessly. How can I assist you today?");
   let directLine1 = await initializeDirectLine();
@@ -145,10 +149,10 @@ async function displayChatMessage(question, response, role,directLine) {
       if(response.speak==="Generate"){
  
         insertResponseIntoDocument(response.text);
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">SOW content generated in document</div>`;
+        chatWindow.innerHTML += `${botTemplate}${sowMsg}</div>`;
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText("S.O.W. content generated in document");
+            speakText(sowMsg);
         });
        
         //speechFlag = false;  
@@ -156,10 +160,10 @@ async function displayChatMessage(question, response, role,directLine) {
       }else if(response.speak==="Table"){
  
         insertResponseIntoDocumentAtCursor(response.text, "end");
-        chatWindow.innerHTML += `${botTemplate} Table has been generated in document</div>`;     
+        chatWindow.innerHTML += `${botTemplate}${tableMsg}</div>`;     
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText("Table has been generated in document");
+            speakText(tableMsg);
         });
        
         //speechFlag = false;  
@@ -170,19 +174,19 @@ async function displayChatMessage(question, response, role,directLine) {
         statusflag=await insertResponseIntoDocumentAtCursor(response.text,"replace");
         console.log(statusflag);
         if(statusflag){
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">Table has been generated in document</div>`;      
+        chatWindow.innerHTML += `${botTemplate}${tableMsg}</div>`;     
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText("Table has been generated in document");
+            speakText(tableMsg);
         });
        
         //speechFlag = false;  
         }}
         else{
-          chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">No table is selected in the document</div>`;      
+          chatWindow.innerHTML += `${botTemplate}${noTableMsg}</div>`;    
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText("No table is selected in the document");
+            speakText(noTableMsg);
         });
        
         //speechFlag = false;  
@@ -193,7 +197,7 @@ async function displayChatMessage(question, response, role,directLine) {
         splitText=response.text
         textArray=splitText.split("|");
         replaceText(textArray[0],textArray[1]);
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">Replaced ${textArray[0]} with ${textArray[1]} </div>`;      
+        chatWindow.innerHTML += `${botTemplate}Replaced ${textArray[0]} with ${textArray[1]} </div>`;      
         if(speechFlag){
           ensureVoicesLoaded(() => {
             speakText(`Replaced ${textArray[0]} with ${textArray[1]}`);
@@ -214,17 +218,17 @@ async function displayChatMessage(question, response, role,directLine) {
       }
       else if(response.speak==="paragraph"){
         setSelectedText(response.text);
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">Requested changes have been made in the document</div>`;  
+        chatWindow.innerHTML += `${botTemplate}${changeRequestMsg}</div>`;
         if(speechFlag){
           ensureVoicesLoaded(() => {
-            speakText("Requested changes have been made in the document");
+            speakText(changeRequestMsg);
         });
        
         //speechFlag = false;  
         }
       }
       else if(response.speak==="interim"){
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${response.text}</div>`;
+        chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
         if(speechFlag){
           ensureVoicesLoaded(async () => {
             await speakText(response.text);
@@ -234,7 +238,7 @@ async function displayChatMessage(question, response, role,directLine) {
         }      
       }
       else if(response.speak==="interimFinal"){
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${response.text}</div>`;
+        chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
         if(speechFlag){
           ensureVoicesLoaded(async () => {
             speakText(response.text);
@@ -245,7 +249,7 @@ async function displayChatMessage(question, response, role,directLine) {
       }
    
       else if(response.text){
-        chatWindow.innerHTML += `<div class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">${response.text}</div>`;
+        chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
         document.getElementById("insertButton").style.display = "block";
         if(speechFlag){
           console.log("speaking bot message");
