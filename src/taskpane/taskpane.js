@@ -541,7 +541,7 @@ let dotIndex = 0;
 
 // Start loading animation
 setInterval(() => {
-    loadingElement.innerHTML += `<div id = "loader" class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">Loading ${loadingDots[dotIndex]}</div>`;
+    loadingElement.innerText += `<div id = "loader" class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">Loading ${loadingDots[dotIndex]}</div>`;
     dotIndex = (dotIndex + 1) % loadingDots.length; // Cycle through array
 }, 500); // Change dots every 500ms
 // setTimeout(() => {
