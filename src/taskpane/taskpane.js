@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
- 
+import { welcomeMsg } from "../Constants.js"; 
 let speechFlag = false;
 let popup=null;
+//const welcomeMsg = "Hi! I'm NoviPilot, your Word assistant bot. I can help you create documents, modify content, and insert useful information seamlessly. How can I assist you today?";
 const tableMsg = "Table has been generated in document"; 
 const sowMsg = "S.O.W. content generated in document";
 const noTableMsg = "No table is selected in the document";
@@ -11,17 +12,9 @@ const botTemplate = `<div class="bot-wrapper">
   <img width=20 height=20 src="../../assets/copilot.png"/> NoviWord
 </div>
 <div class="message bot">`;
-
-const botMessageTemplate = (message) => `
-  <div class="bot-wrapper">
-    <img width="20" height="20" src="../../assets/copilot.png"/> NoviWord
-  </div>
-  <div class="message bot">${message}</div>
-`;
-
-
+console.log("from import "+welcomeMsg);
 Office.onReady(async function (info) {
-  displayStartingMessage("Hi! I'm NoviPilot, your Word assistant bot. I can help you create documents, modify content, and insert useful information seamlessly. How can I assist you today?");
+  displayStartingMessage(welcomeMsg);
   let directLine1 = await initializeDirectLine();
 if (info.host === Office.HostType.Word) {
 
@@ -236,8 +229,7 @@ async function displayChatMessage(question, response, role,directLine) {
         }
       }
       else if(response.speak==="interim"){
-      //  chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
-        chatWindow.innerHTML += botMessageTemplate(response.text);
+        chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
         if(speechFlag){
           ensureVoicesLoaded(async () => {
             await speakText(response.text);
@@ -247,8 +239,7 @@ async function displayChatMessage(question, response, role,directLine) {
         }      
       }
       else if(response.speak==="interimFinal"){
-        // chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
-        chatWindow.innerHTML += botMessageTemplate(response.text);
+        chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
         if(speechFlag){
           ensureVoicesLoaded(async () => {
             speakText(response.text);
@@ -259,8 +250,7 @@ async function displayChatMessage(question, response, role,directLine) {
       }
    
       else if(response.text){
-        // chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
-        chatWindow.innerHTML += botMessageTemplate(response.text);
+        chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
         document.getElementById("insertButton").style.display = "block";
         if(speechFlag){
           console.log("speaking bot message");
