@@ -12,6 +12,14 @@ const botTemplate = `<div class="bot-wrapper">
 </div>
 <div class="message bot">`;
 
+const botMessageTemplate = (message) => `
+  <div class="bot-wrapper">
+    <img width="20" height="20" src="../../assets/copilot.png"/> NoviWord
+  </div>
+  <div class="message bot">${message}</div>
+`;
+
+
 Office.onReady(async function (info) {
   displayStartingMessage("Hi! I'm NoviPilot, your Word assistant bot. I can help you create documents, modify content, and insert useful information seamlessly. How can I assist you today?");
   let directLine1 = await initializeDirectLine();
@@ -228,7 +236,8 @@ async function displayChatMessage(question, response, role,directLine) {
         }
       }
       else if(response.speak==="interim"){
-        chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
+      //  chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
+        chatWindow.innerHTML += botMessageTemplate(response.text);
         if(speechFlag){
           ensureVoicesLoaded(async () => {
             await speakText(response.text);
@@ -238,7 +247,8 @@ async function displayChatMessage(question, response, role,directLine) {
         }      
       }
       else if(response.speak==="interimFinal"){
-        chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
+        // chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
+        chatWindow.innerHTML += botMessageTemplate(response.text);
         if(speechFlag){
           ensureVoicesLoaded(async () => {
             speakText(response.text);
@@ -249,7 +259,8 @@ async function displayChatMessage(question, response, role,directLine) {
       }
    
       else if(response.text){
-        chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
+        // chatWindow.innerHTML += `${botTemplate}${response.text}</div>`;
+        chatWindow.innerHTML += botMessageTemplate(response.text);
         document.getElementById("insertButton").style.display = "block";
         if(speechFlag){
           console.log("speaking bot message");
