@@ -117,7 +117,7 @@ function displayStartingMessage(starter) {
 
   // Start loading animation
   let loadingInterval = setInterval(() => {
-      loadingElement.innerText = loadingDots[dotIndex];
+      loadingElement.innerText = "Loading "+ loadingDots[dotIndex];
       dotIndex = (dotIndex + 1) % loadingDots.length; // Cycle through array
   }, 500); // Change dots every 500ms
   setTimeout(() => {
