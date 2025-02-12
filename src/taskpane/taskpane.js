@@ -538,10 +538,11 @@ function displayLoading(){
 let loadingElement = document.getElementById("chatWindow");
 let loadingDots = ["", ".", "..", "..."]; // Define loading states
 let dotIndex = 0;
-
+loadingElement.innerHTML += `<div id = "loader" class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot"></div>`;
 // Start loading animation
+let loader = document.getElementById("loader");
 setInterval(() => {
-    loadingElement.innerText += `<div id = "loader" class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div class="message bot">Loading ${loadingDots[dotIndex]}</div>`;
+  loader.innerText =loadingDots[dotIndex];
     dotIndex = (dotIndex + 1) % loadingDots.length; // Cycle through array
 }, 500); // Change dots every 500ms
 // setTimeout(() => {
