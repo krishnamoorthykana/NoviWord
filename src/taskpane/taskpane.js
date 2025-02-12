@@ -535,6 +535,7 @@ function ensureVoicesLoaded(callback) {
  
 
 function displayLoading(){
+
 let loadingElement = document.getElementById("chatWindow");
 let loadingDots = ["", ".", "..", "..."]; // Define loading states
 let dotIndex = 0;
