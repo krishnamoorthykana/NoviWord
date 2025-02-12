@@ -365,6 +365,7 @@ const initializeDirectLine = async function () {
         try{
         //  document.getElementById("loader").style.display = "none";  
           document.getElementById("loader-container").remove(); 
+          document.getElementById("loader").remove(); 
         }catch{
           console.log("could not find the element");
         }
@@ -538,7 +539,7 @@ function ensureVoicesLoaded(callback) {
 function displayLoading(){
 
 let loadingElement = document.getElementById("chatWindow");
-let loadingDots = ["", ".", "..", "..."]; // Define loading states
+let loadingDots = [ ".", "..", "..."]; // Define loading states
 let dotIndex = 0;
 loadingElement.innerHTML += `<div id="loader-container" class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div id = "loader" class="message bot"></div>`;
 // Start loading animation
