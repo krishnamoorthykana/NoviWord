@@ -20,8 +20,8 @@ document.getElementById("sendButton").onclick = async function () {
     //document.getElementById("headerId").style.display = "none";
     displayChatMessage(question, '', "User",directLine1);
     // call loading function
-    console.log("Calling display function");
-    displayLoading();
+    // console.log("Calling loading function");
+    // displayLoading();
       await getBotResponse(directLine1, question);
    
  
@@ -37,6 +37,9 @@ document.getElementById("userInput").addEventListener("keydown", async function 
     if (question) {
       //document.getElementById("headerId").style.display = "none";
         displayChatMessage(question, '', "User",directLine1);
+        // call loading function
+        // console.log("Calling loading function");
+        // displayLoading();
       await getBotResponse(directLine1, question);
      
   }
@@ -98,6 +101,9 @@ document.getElementById('startSpeechButton').addEventListener('click', function 
         displayChatMessage(question, '', "User");
         const micButton=document.getElementById("startSpeechButton")//disable mic
         micButton.disabled=true;
+        // call loading function
+        // console.log("Calling loading function");
+        // displayLoading();
         await getBotResponse(directLine1, question);
       }
       popup.close();
@@ -382,6 +388,9 @@ const initializeDirectLine = async function () {
 };
  
 const getBotResponse = async function (directLine, question) {
+  // call loading function
+  console.log("Calling loading function");
+  displayLoading();
   console.log("User:",question);
   directLine
     .postActivity({
@@ -538,7 +547,7 @@ function ensureVoicesLoaded(callback) {
  
 
 function displayLoading(){
-  console.log("display function called");
+  console.log("Load function called");
 let loadingElement = document.getElementById("chatWindow");
 let loadingDots = [ ".", "..", "..."]; // Define loading states
 let dotIndex = 0;
