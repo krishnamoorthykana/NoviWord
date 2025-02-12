@@ -550,8 +550,8 @@ function displayLoading(){
   console.log("Load function called");
 let loadingElement = document.getElementById("chatWindow");
 let loadingDots = [ ".", "..", "..."]; // Define loading states
-let dotIndex = 0;
-loadingElement.innerHTML += `<div id="loader-container" class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div id = "loader" class="message bot"></div>`;
+let dotIndex = 1;
+loadingElement.innerHTML += `<div id="loader-container" class="bot-wrapper"><img width=20 height=20 src="../../assets/copilot.png"/> NoviPilot</div><div id = "loader" class="message bot">.</div>`;
 // Start loading animation
 let loader = document.getElementById("loader");
 setInterval(() => {
