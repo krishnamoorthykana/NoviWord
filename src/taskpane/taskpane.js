@@ -62,7 +62,7 @@ Office.onReady(async function (info) {
             if (event.origin !== window.location.origin) return; // Security check
 
             // Get the recognized text from the pop-up
-            transcript = event.data;
+           let transcript = event.data;
 
             // Insert recognized text into user input
             console.log(transcript);
