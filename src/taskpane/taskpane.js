@@ -4,7 +4,6 @@
 let speechFlag = false;
 let popup=null;
 let loader=true;
- console.log("testing");
 Office.onReady(async function (info) {
   displayStartingMessage("Hi! I'm NoviPilot, your personal Copilot agent. I can help you create documents, modify content, and insert useful information seamlessly. How can I assist you today?");
   let directLine1 = await initializeDirectLine();
