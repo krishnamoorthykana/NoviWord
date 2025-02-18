@@ -470,7 +470,8 @@ async function getSelectedTable(directLine) {
 async function setSelectedText(response) {
   await Word.run(async (context) => {
     const selection = context.document.getSelection();
-    selection.insertText(response, Word.InsertLocation.replace);
+   // selection.insertText(response, Word.InsertLocation.replace);
+    selection.insertHtml(response, Word.InsertLocation.replace);
     await context.sync();
   });
 }
